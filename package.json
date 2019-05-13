@@ -1,10 +1,11 @@
 {
-  "name": "CRA-Material-UI-Emotion-Blockstack Starter",
-  "version": "3.2.2",
+  "name": "CRA-Material-UI-Blockstack",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@emotion/core": "^10.0.10",
     "@material-ui/core": "latest",
+    "blockstack": "latest",
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
@@ -27,5 +28,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.13.0"
   }
 }
