@@ -5,10 +5,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#77AF9C',
+      main: '#52616a',
     },
     secondary: {
-      main: '#8CD790',
+      main: '#c9d6de',
     },
   },
   typography: {
