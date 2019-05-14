@@ -5,8 +5,12 @@
 Download the example [or clone the repo](https://github.com/mui-org/material-ui):
 
 ```sh
-curl https://codeload.github.com/mui-org/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/create-react-app
-cd create-react-app
+Create React App with the following configs
+
+1. React
+2. Material UI
+3. Blockstack
+4. Emotion
 ```
 
 Install it and run:
