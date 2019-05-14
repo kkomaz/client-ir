@@ -55,13 +55,13 @@ class Index extends Component {
     const { classes } = this.props
 
     return (
-      <div>
+      <div className={classes}>
         {
           userSession.isUserSignedIn() ?
             <Button variant="contained" color="secondary" onClick={this.handleSignOut}>
               Sign Out
             </Button> :
-            <div className={classes}>
+            <div>
               <Button variant="contained" color="primary" onClick={this.handleSignIn}>
                 Sign In
               </Button>
