@@ -8,7 +8,7 @@ Download the example [or clone the repo](https://github.com/mui-org/material-ui)
 Create React App with the following configs
 
 1. React
-2. Material UI
+2. antd design
 3. Blockstack
 4. Emotion
 ```

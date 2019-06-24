@@ -1,8 +1,22 @@
 /* eslint-disable */
+const { override, fixBabelImports, addLessLoader } = require('customize-cra');
+
 module.exports = {
-  webpack: function (config, env) {
-    return config;
-  },
+  webpack: override(
+    fixBabelImports('import', {
+      libraryName: 'antd',
+      libraryDirectory: 'es',
+      style: true,
+   }),
+   addLessLoader({
+     javascriptEnabled: true,
+     modifyVars: {
+       '@primary-color': '#1DA57A',
+       '@menu-bg': '#D8E6E7',
+       '@menu-dark-bg': '#1C1D21'
+     },
+   }),
+  ),
   jest: function (config) {
     return config;
   },

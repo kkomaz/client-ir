@@ -1,15 +1,20 @@
 {
-  "name": "yourlist",
+  "name": "Ant-Design-Blockstack",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@emotion/core": "^10.0.10",
-    "@material-ui/core": "latest",
+    "antd": "^3.19.7",
+    "babel-plugin-import": "^1.12.0",
     "blockstack": "latest",
+    "customize-cra": "^0.2.13",
+    "less-loader": "^5.0.0",
+    "less": "^3.9.0",
     "prop-types": "latest",
-    "react": "latest",
     "react-dom": "latest",
-    "react-scripts": "latest"
+    "react-image-file-resizer": "^0.2.0",
+    "react-scripts": "latest",
+    "react": "latest"
   },
   "scripts": {
     "start": "PORT=3001 react-app-rewired start",
@@ -30,7 +35,6 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.17.2",

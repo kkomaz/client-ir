@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
+import { Button } from 'antd';
 import { UserSession } from 'blockstack'
 import { appConfig } from 'utils/constants'
-import withRoot from '../withRoot';
-
-const styles = theme => ({
-  root: {
-    textAlign: 'center',
-    paddingTop: theme.spacing.unit * 20,
-  },
-});
 
 class Index extends Component {
   static propTypes = {
@@ -72,4 +63,4 @@ class Index extends Component {
   }
 }
 
-export default withRoot(withStyles(styles)(Index));
+export default Index
