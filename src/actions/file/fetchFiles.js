@@ -1,12 +1,29 @@
+import {
+  REQUEST_FETCH_FILES,
+  FETCH_FILES_SUCCESS,
+  FETCH_FILES_FAIL,
+} from '..'
 import File from 'models/file'
 
-const fetchFiles = () => (
+const fetchFiles = openNotificationWithIcon => (
   async (dispatch) => {
-    const result = await File.fetchList()
-    dispatch({
-      type: 'FETCH_FILES',
-      payload: result
-    })
+    dispatch({ type: REQUEST_FETCH_FILES })
+
+    try {
+      const result = await File.fetchList()
+      dispatch({
+        type: FETCH_FILES_SUCCESS,
+        payload: {
+          files: result
+        },
+      })
+    } catch (error) {
+      dispatch({
+        type: FETCH_FILES_FAIL,
+        error,
+        openNotificationWithIcon,
+      })
+    }
   }
 )
 

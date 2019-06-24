@@ -2,6 +2,7 @@ import {
   REQUEST_CREATE_FILE,
   CREATE_FILE_FAIL,
   CREATE_FILE_SUCCESS,
+  FETCH_FILES_SUCCESS,
 } from 'actions'
 
 const defaultState = {
@@ -19,6 +20,9 @@ export default function viewReducer(state = defaultState, action) {
     case CREATE_FILE_SUCCESS: {
       action.openNotificationWithIcon('success', 'File Saved', 'File Successfully Saved')
       return { ...state, list: [...state.list, action.payload.file] }
+    }
+    case FETCH_FILES_SUCCESS: {
+      return { ...state, list: action.payload.files }
     }
     default:
       return state
