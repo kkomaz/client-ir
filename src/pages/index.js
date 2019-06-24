@@ -57,6 +57,13 @@ function Home() {
     setHeight(value)
   }
 
+  const removeImage = () => {
+    setCurrentFile('')
+    setHeight(0)
+    setWidth(0)
+    setFiles([])
+  }
+
   const saveLocally = () => {
     saveAs(currentFile, 'hello.jpg')
   }
@@ -122,11 +129,12 @@ function Home() {
                 width:
               </span>
               <InputNumber
-                min={1}
+                min={0}
                 onChange={onWidthChange}
                 css={css`
                   margin: 0 0.5em;
                 `}
+                value={width}
               />
 
               <span
@@ -141,11 +149,12 @@ function Home() {
                 height:
               </span>
               <InputNumber
-                min={1}
+                min={0}
                 onChange={onHeightChange}
                 css={css`
                   margin: 0 0.5em;
                 `}
+                value={height}
               />
               <Button
                 onClick={fileChangedHandler}
@@ -215,6 +224,7 @@ function Home() {
                 Download (Locally)
               </Button>
               <Button
+                onClick={removeImage}
                 type="danger"
                 css={css`
                   width: 100%;
