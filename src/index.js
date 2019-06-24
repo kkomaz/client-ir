@@ -13,7 +13,7 @@ import reducers from './reducers'
 
 // Relative Paths
 import mySaga from './sagas'
-import Index from './pages/index';
+import GlobalComp from './GlobalComp';
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -52,7 +52,7 @@ configure({
 ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>
-      <Index />
+      <GlobalComp />
     </BrowserRouter>
   </Provider>
 ), document.getElementById('root'));
