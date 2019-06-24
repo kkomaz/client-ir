@@ -1,5 +1,8 @@
-// import { fork } from 'redux-saga/effects'
+import { fork } from 'redux-saga/effects'
+import fileSaga from 'sagas/file'
 
 export default function* rootSaga() {
-  yield []
+  yield [
+    fork(fileSaga)
+  ]
 }

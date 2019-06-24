@@ -1,5 +1,7 @@
 /** @jsx jsx */
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
+import { useDispatch } from 'react-redux'
+import { requestCreateFile } from 'actions/file'
 import { jsx, css } from '@emotion/core'
 import _ from 'lodash'
 import Resizer from 'react-image-file-resizer'
@@ -9,7 +11,6 @@ import {
   Col,
   Icon,
   InputNumber,
-  message,
   Row,
   Typography,
   Upload,
@@ -25,6 +26,11 @@ function Home() {
   const [width, setWidth] = useState(0)
   const [height, setHeight] = useState(0)
   const [currentFile, setCurrentFile] = useState('')
+  const dispatch = useDispatch()
+
+  const saveToGaia = useCallback(
+    () => dispatch(requestCreateFile(files[0].name, currentFile)), [dispatch, files, currentFile]
+  )
 
   const fileChangedHandler = async () => {
     const convertedFile = files[0]
@@ -199,13 +205,15 @@ function Home() {
             >
               <Title level={4}>Actions</Title>
               <Button
+                onClick={saveToGaia}
                 type="primary"
                 css={css`
                   width: 100%;
                   margin-bottom: 1em;
                 `}
+                disabled={_.isEmpty(currentFile)}
               >
-                Save
+                Save (Every save will create a new file)
               </Button>
               <Button
                 css={css`
@@ -213,6 +221,7 @@ function Home() {
                   margin-bottom: 1em;
                 `}
                 onClick={saveLocally}
+                disabled={_.isEmpty(currentFile)}
               >
                 Download (Locally)
               </Button>
@@ -223,6 +232,7 @@ function Home() {
                   width: 100%;
                   margin-bottom: 1em;
                 `}
+                disabled={_.isEmpty(currentFile)}
               >
                 Remove Image
               </Button>
