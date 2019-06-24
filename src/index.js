@@ -41,7 +41,7 @@ const userSession = new UserSession({
 const apiServer = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_API_URL_DEV : process.env.REACT_APP_API_RADIKS_PROD
 
 const store = configureStore()
-sagaMiddleware.run(mySaga)
+
 
 setAxiosHeaders()
 configure({
@@ -49,6 +49,7 @@ configure({
   userSession
 });
 
+sagaMiddleware.run(mySaga)
 ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>
