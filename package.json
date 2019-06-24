@@ -18,9 +18,13 @@
     "react": "latest",
     "react-dom": "latest",
     "react-image-file-resizer": "^0.2.0",
+    "react-redux": "^7.1.0",
     "react-responsive": "^7.0.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "latest",
+    "redux": "^4.0.1",
+    "redux-saga": "^1.0.3",
+    "reselect": "^4.0.0",
     "styled-components": "^4.3.2"
   },
   "scripts": {
