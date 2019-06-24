@@ -13,6 +13,7 @@ import {
 } from 'antd';
 import Navbar from 'components/Navbar'
 import IrSidebar from 'components/Sidebar'
+import Home from '.'
 
 function RootRoute(props) {
   const { userSession } = props
@@ -50,9 +51,7 @@ function RootRoute(props) {
                   exact
                   path="/"
                   render={() => (
-                    <div>
-                      Hello World
-                    </div>
+                    <Home />
                   )}
                 />
               </Switch>

@@ -6,7 +6,13 @@ import { appConfig } from 'utils/constants'
 import { User } from 'radiks'
 import { Global, css } from '@emotion/core'
 import Login from 'components/Login'
+import { ThemeProvider } from 'emotion-theming'
+import colors from 'utils/colors'
 import RootRoute from './pages/routes'
+
+const theme = {
+  colors,
+}
 
 class GlobalComp extends Component {
   constructor(props) {
@@ -93,28 +99,30 @@ class GlobalComp extends Component {
     const { loggedIn, userSession, loggingIn } = this.state
 
     return (
-      <div>
-        {
-          loggedIn ?
-            <div className="logged-in">
-              <Global
-                styles={css`
-                  * {
-                    font-family: Poppins, sans-serif;
-                  }
-                `}
-              />
-              <RootRoute
+      <ThemeProvider theme={theme}>
+        <div>
+          {
+            loggedIn ?
+              <div className="logged-in">
+                <Global
+                  styles={css`
+                    * {
+                      font-family: Poppins, sans-serif;
+                    }
+                  `}
+                />
+                <RootRoute
+                  userSession={userSession}
+                />
+              </div>
+              :
+              <Login
                 userSession={userSession}
+                loggingIn={loggingIn}
               />
-            </div>
-            :
-            <Login
-              userSession={userSession}
-              loggingIn={loggingIn}
-            />
-        }
-      </div>
+          }
+        </div>
+      </ThemeProvider>
     )
   }
 }
