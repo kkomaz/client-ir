@@ -5,7 +5,7 @@ import {
 } from '..'
 import File from 'models/file'
 
-const createFile = (name, blob) => (
+const createFile = (name, blob, openNotificationWithIcon) => (
   async (dispatch) => {
     dispatch({ type: REQUEST_CREATE_FILE })
 
@@ -20,12 +20,14 @@ const createFile = (name, blob) => (
         type: CREATE_FILE_SUCCESS,
         payload: {
           file,
-        }
+        },
+        openNotificationWithIcon,
       })
     } catch (error) {
       dispatch({
         type: CREATE_FILE_FAIL,
-        error
+        error,
+        openNotificationWithIcon
       })
     }
   }

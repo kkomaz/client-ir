@@ -14,6 +14,7 @@ import {
   Row,
   Typography,
   Upload,
+  notification,
 } from 'antd'
 import { saveAs } from 'file-saver'
 import placeholder from 'assets/placeholder.png'
@@ -28,8 +29,17 @@ function Home() {
   const [currentFile, setCurrentFile] = useState('')
   const dispatch = useDispatch()
 
+  const openNotificationWithIcon = (type, message, description) => {
+    notification[type]({
+      message,
+      description,
+    });
+  };
+
   const saveToGaia = useCallback(
-    () => dispatch(createFile(files[0].name, currentFile)), [dispatch, files, currentFile]
+    () => dispatch(
+      createFile(files[0].name, currentFile, openNotificationWithIcon),
+    ), [dispatch, files, currentFile]
   )
 
   const fileChangedHandler = async () => {
