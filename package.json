@@ -1,20 +1,21 @@
 {
-  "name": "Ant-Design-Blockstack",
+  "name": "client-ir",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@emotion/core": "^10.0.10",
     "antd": "^3.19.7",
+    "axios": "^0.19.0",
     "babel-plugin-import": "^1.12.0",
     "blockstack": "latest",
     "customize-cra": "^0.2.13",
-    "less-loader": "^5.0.0",
     "less": "^3.9.0",
+    "less-loader": "^5.0.0",
     "prop-types": "latest",
+    "react": "latest",
     "react-dom": "latest",
     "react-image-file-resizer": "^0.2.0",
-    "react-scripts": "latest",
-    "react": "latest"
+    "react-scripts": "latest"
   },
   "scripts": {
     "start": "PORT=3001 react-app-rewired start",
