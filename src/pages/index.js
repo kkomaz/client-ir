@@ -21,14 +21,18 @@ const { Title } = Typography
 
 function Home() {
   const [files, setFiles] = useState([])
+  const [width, setWidth] = useState(0)
+  const [height, setHeight] = useState(0)
   const [currentFile, setCurrentFile] = useState('')
 
   const fileChangedHandler = async () => {
-    const convertedFile = files[0].originFileObj
+    const convertedFile = files[0]
+    console.log(height, 'h')
+    console.log(width, 'w')
     Resizer.imageFileResizer(
       convertedFile,
-      300,
-      300,
+      width,
+      height,
       'JPEG',
       100,
       0,
@@ -43,6 +47,16 @@ function Home() {
     setFiles([file])
     return false
   }
+
+  const onWidthChange = (value) => {
+    setWidth(value)
+  }
+
+  const onHeightChange = (value) => {
+    setHeight(value)
+  }
+
+  console.log(currentFile)
 
   return (
     <div>
@@ -66,6 +80,7 @@ function Home() {
                   console.log('uploading...')
                 }
                 if (status === 'done') {
+                  setCurrentFile('')
                   setFiles([info.file])
                   message.success(`${info.file.name} file uploaded successfully.`);
                 } else if (status === 'error') {
@@ -81,8 +96,7 @@ function Home() {
               </p>
               <p className="ant-upload-text">Click or drag file to this area to upload</p>
               <p className="ant-upload-hint">
-                Support for a single or bulk upload. Strictly prohibit from uploading company
-                data or other band files
+                Support for a single upload. Image will be converted to jpeg
               </p>
             </Dragger>
           </Col>
@@ -106,6 +120,7 @@ function Home() {
               </span>
               <InputNumber
                 min={1}
+                onChange={onWidthChange}
                 css={css`
                   margin: 0 0.5em;
                 `}
@@ -124,18 +139,22 @@ function Home() {
               </span>
               <InputNumber
                 min={1}
+                onChange={onHeightChange}
                 css={css`
                   margin: 0 0.5em;
                 `}
               />
-              <Button onClick={fileChangedHandler}>
+              <Button
+                onClick={fileChangedHandler}
+                disabled={files.length === 0 || _.isEqual(0, width) || _.isEqual(0, height)}
+              >
                 Resize it
               </Button>
             </div>
           </Col>
         </Row>
         <Row>
-          <Col span={12}>
+          <Col span={24}>
             <div
               css={css`
                 display: flex;
@@ -145,17 +164,26 @@ function Home() {
               `}
             >
               <Title level={4}>Image Preview</Title>
-              <img
-                css={theme => css`
-                  border: 1px dashed ${theme.colors.primary};
+              <div
+                css={css`
+                  max-height: 400px;
+                  overflow: auto;
+                `}
+              >
+                <img
+                  css={theme => css`
+                    border: 1px dashed ${theme.colors.primary};
+                    width: 100%;
                   `}
-                src={_.isEmpty(currentFile) ? placeholder : currentFile}
-                alt="preview"
-              />
+                  src={_.isEmpty(currentFile) ? placeholder : currentFile}
+                  alt="preview"
+                />
+              </div>
             </div>
           </Col>
-
-          <Col span={12}>
+        </Row>
+        <Row>
+          <Col span={24}>
             <div
               css={css`
                 display: flex;
