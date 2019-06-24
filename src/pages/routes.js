@@ -13,6 +13,7 @@ import {
 } from 'antd';
 import Navbar from 'components/Navbar'
 import IrSidebar from 'components/Sidebar'
+import FilesRoutes from 'pages/files/routes'
 import Home from '.'
 
 function RootRoute(props) {
@@ -52,6 +53,12 @@ function RootRoute(props) {
                   path="/"
                   render={() => (
                     <Home />
+                  )}
+                />
+                <Route
+                  path="/files"
+                  render={({ match }) => (
+                    <FilesRoutes match={match} />
                   )}
                 />
               </Switch>
