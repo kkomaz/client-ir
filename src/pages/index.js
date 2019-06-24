@@ -28,6 +28,7 @@ function Home() {
 
   const fileChangedHandler = async () => {
     const convertedFile = files[0]
+
     Resizer.imageFileResizer(
       convertedFile,
       height,
@@ -35,9 +36,9 @@ function Home() {
       'JPEG',
       100,
       0,
-      uri => (
+      (uri) => {
         setCurrentFile(uri)
-      ),
+      },
       'base64'
     );
   }
@@ -63,7 +64,7 @@ function Home() {
   }
 
   const saveLocally = () => {
-    saveAs(currentFile, 'hello.jpg')
+    saveAs(currentFile, files[0].name)
   }
 
   return (
@@ -91,13 +92,14 @@ function Home() {
               multiple={false}
               beforeUpload={replaceFile}
               fileList={files}
+              accept=".jpeg, .png, .webp"
             >
               <p className="ant-upload-drag-icon">
                 <Icon type="inbox" />
               </p>
               <p className="ant-upload-text">Click or drag file to this area to upload</p>
               <p className="ant-upload-hint">
-                Support for a single upload. Image will be converted to jpeg
+                Support for a single upload. Image will be converted to jpeg, png, or webp
               </p>
             </Dragger>
           </Col>
