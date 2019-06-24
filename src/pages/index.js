@@ -39,7 +39,10 @@ function Home() {
     );
   }
 
-  console.log(files)
+  const replaceFile = (file) => {
+    setFiles([file])
+    return false
+  }
 
   return (
     <div>
@@ -63,13 +66,15 @@ function Home() {
                   console.log('uploading...')
                 }
                 if (status === 'done') {
-                  setFiles(info.fileList)
+                  setFiles([info.file])
                   message.success(`${info.file.name} file uploaded successfully.`);
                 } else if (status === 'error') {
                   message.error(`${info.file.name} file upload failed.`);
                 }
               }}
               multiple={false}
+              beforeUpload={replaceFile}
+              fileList={files}
             >
               <p className="ant-upload-drag-icon">
                 <Icon type="inbox" />
