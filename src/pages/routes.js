@@ -88,27 +88,23 @@ function RootRoute(props) {
             >
               <Menu
                 css={css`
-                  margin-top: 20px;
                   background: inherit;
                 `}
                 onClick={() => console.log('clicking')}
                 defaultSelectedKeys={['1']}
               >
-                <Menu.Item key="1">
-                  <Icon type="inbox" />
-                  <span>Inbox</span>
+                <Menu.Item
+                  css={css`
+                    margin-top: 0 !important;
+                  `}
+                  key="1"
+                >
+                  <Icon type="upload" />
+                  <span>Resize</span>
                 </Menu.Item>
                 <Menu.Item key="2">
-                  <Icon type="calendar" />
-                  <span>Today</span>
-                </Menu.Item>
-                <Menu.Item key="3">
-                  <Icon type="carry-out" />
-                  <span>Week</span>
-                </Menu.Item>
-                <Menu.Item key="4">
-                  <Icon type="carry-out" />
-                  <span>Projects (TBD)</span>
+                  <Icon type="file" />
+                  <span>My files</span>
                 </Menu.Item>
               </Menu>
             </Sider>
