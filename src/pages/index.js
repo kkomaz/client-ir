@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { useState } from 'react'
 import { jsx, css } from '@emotion/core'
+import _ from 'lodash'
 import Resizer from 'react-image-file-resizer'
 import {
   Button,
@@ -19,6 +20,7 @@ const { Title } = Typography
 
 function Home() {
   const [files, setFiles] = useState([])
+  const [currentFile, setCurrentFile] = useState('')
 
   const fileChangedHandler = async () => {
     const convertedFile = files[0].originFileObj
@@ -30,7 +32,7 @@ function Home() {
       100,
       0,
       uri => {
-        console.log(uri)
+        setCurrentFile(uri)
       },
       'base64'
     );
@@ -40,7 +42,7 @@ function Home() {
 
   return (
     <div>
-      <Card title="ImageResizer">
+      <Card>
         <Row
           css={css`
             margin-bottom: 2em;
@@ -69,6 +71,7 @@ function Home() {
                   message.error(`${info.file.name} file upload failed.`);
                 }
               }}
+              showUploadList={false}
             >
               <p className="ant-upload-drag-icon">
                 <Icon type="inbox" />
@@ -96,7 +99,7 @@ function Home() {
                 css={theme => css`
                   border: 1px dashed ${theme.colors.primary};
                   `}
-                src={placeholder}
+                src={_.isEmpty(currentFile) ? placeholder : currentFile}
                 alt="preview"
               />
             </div>
