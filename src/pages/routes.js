@@ -9,15 +9,10 @@ import {
 } from 'react-router-dom'
 import Container from 'components/Common/Container'
 import {
-  Icon,
   Layout,
-  Menu,
 } from 'antd';
 import Navbar from 'components/Navbar'
-
-const {
-  Sider,
-} = Layout
+import IrSidebar from 'components/Sidebar'
 
 function RootRoute(props) {
   const { userSession } = props
@@ -42,35 +37,8 @@ function RootRoute(props) {
               height: 100vh;
             `}
           >
-            <Sider
-              breakpoint="lg"
-              collapsedWidth="0"
-              style={{
-                background: 'inherit'
-              }}
-            >
-              <Menu
-                css={css`
-                  background: inherit;
-                `}
-                onClick={() => console.log('clicking')}
-                defaultSelectedKeys={['1']}
-              >
-                <Menu.Item
-                  css={css`
-                    margin-top: 0 !important;
-                  `}
-                  key="1"
-                >
-                  <Icon type="upload" />
-                  <span>Resize</span>
-                </Menu.Item>
-                <Menu.Item key="2">
-                  <Icon type="file" />
-                  <span>My files</span>
-                </Menu.Item>
-              </Menu>
-            </Sider>
+            <IrSidebar />
+
             <Layout
               css={css`
                 background: #fff;
