@@ -8,6 +8,7 @@ import {
   Card,
   Col,
   Icon,
+  InputNumber,
   message,
   Row,
   Typography,
@@ -49,9 +50,6 @@ function Home() {
           `}
         >
           <Col span={24}>
-            <Button onClick={fileChangedHandler}>
-              Resize it
-            </Button>
             <Dragger
               name="file"
               customRequest={(data) => {
@@ -71,7 +69,7 @@ function Home() {
                   message.error(`${info.file.name} file upload failed.`);
                 }
               }}
-              showUploadList={false}
+              multiple={false}
             >
               <p className="ant-upload-drag-icon">
                 <Icon type="inbox" />
@@ -82,6 +80,53 @@ function Home() {
                 data or other band files
               </p>
             </Dragger>
+          </Col>
+        </Row>
+
+        <Row
+          css={css`
+            margin-bottom: 2em;
+          `}
+        >
+          <Col span={24}>
+            <div
+              css={css`
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+              `}
+            >
+              <span>
+                width:
+              </span>
+              <InputNumber
+                min={1}
+                css={css`
+                  margin: 0 0.5em;
+                `}
+              />
+
+              <span
+                css={css`
+                  margin-right: 0.5em;
+                `}
+              >
+                x
+              </span>
+
+              <span>
+                height:
+              </span>
+              <InputNumber
+                min={1}
+                css={css`
+                  margin: 0 0.5em;
+                `}
+              />
+              <Button onClick={fileChangedHandler}>
+                Resize it
+              </Button>
+            </div>
           </Col>
         </Row>
         <Row>
