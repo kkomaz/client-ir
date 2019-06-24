@@ -7,22 +7,19 @@ import { BrowserRouter } from 'react-router-dom'
 
 // Redux Configs
 import { Provider } from 'react-redux'
-import createSagaMiddleware from 'redux-saga'
+import thunk from 'redux-thunk'
 import { createStore, applyMiddleware, compose } from 'redux'
 import reducers from './reducers'
 
 // Relative Paths
-import mySaga from './sagas'
 import GlobalComp from './GlobalComp';
-
-const sagaMiddleware = createSagaMiddleware()
 
 const configureStore = (initialState) => {
   const store = createStore(
     reducers,
     initialState,
     compose(
-      applyMiddleware(sagaMiddleware),
+      applyMiddleware(thunk),
       window.devToolsExtension ? window.devToolsExtension() : f => f
     ),
   )
@@ -49,7 +46,6 @@ configure({
   userSession
 });
 
-sagaMiddleware.run(mySaga)
 ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>

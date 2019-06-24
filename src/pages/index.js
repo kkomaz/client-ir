@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { requestCreateFile } from 'actions/file'
+import { createFile } from 'actions/file'
 import { jsx, css } from '@emotion/core'
 import _ from 'lodash'
 import Resizer from 'react-image-file-resizer'
@@ -29,7 +29,7 @@ function Home() {
   const dispatch = useDispatch()
 
   const saveToGaia = useCallback(
-    () => dispatch(requestCreateFile(files[0].name, currentFile)), [dispatch, files, currentFile]
+    () => dispatch(createFile(files[0].name, currentFile)), [dispatch, files, currentFile]
   )
 
   const fileChangedHandler = async () => {
@@ -164,7 +164,11 @@ function Home() {
             </div>
           </Col>
         </Row>
-        <Row>
+        <Row
+          css={css`
+            margin-bottom: 2em;
+          `}
+        >
           <Col span={24}>
             <div
               css={css`

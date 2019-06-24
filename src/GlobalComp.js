@@ -1,8 +1,5 @@
 /** @jsx, jsx */
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { requestCreateFile } from 'actions/file'
-import { Button } from 'antd'
 import _ from 'lodash'
 import { UserSession } from 'blockstack'
 import { appConfig } from 'utils/constants'
@@ -98,10 +95,6 @@ class GlobalComp extends Component {
     window.location = '/' // eslint-disable-line no-undef
   }
 
-  doIt = () => {
-    this.props.requestCreateFile('apple', 'blob')
-  }
-
   render() {
     const { loggedIn, userSession, loggingIn } = this.state
 
@@ -111,7 +104,6 @@ class GlobalComp extends Component {
           {
             loggedIn ?
               <div className="logged-in">
-                <Button onClick={this.doIt}>Test</Button>
                 <Global
                   styles={css`
                     * {
@@ -135,6 +127,4 @@ class GlobalComp extends Component {
   }
 }
 
-export default connect(null, {
-  requestCreateFile
-})(GlobalComp)
+export default GlobalComp
