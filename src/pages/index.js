@@ -5,22 +5,23 @@ import Resizer from 'react-image-file-resizer'
 import {
   Button,
   Card,
+  Col,
   Icon,
   message,
-  Upload,
   Row,
-  Col,
+  Typography,
+  Upload,
 } from 'antd'
 import placeholder from 'assets/placeholder.png'
 
 const { Dragger } = Upload;
+const { Title } = Typography
 
 function Home() {
   const [files, setFiles] = useState([])
 
   const fileChangedHandler = async () => {
     const convertedFile = files[0].originFileObj
-    console.log(convertedFile)
     Resizer.imageFileResizer(
       convertedFile,
       300,
@@ -82,17 +83,60 @@ function Home() {
         </Row>
         <Row>
           <Col span={12}>
-            <img
-              css={theme => css`
-                border: 1px dashed ${theme.colors.primary};
+            <div
+              css={css`
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
               `}
-              src={placeholder}
-              alt="preview"
-            />
+            >
+              <Title level={4}>Image Preview</Title>
+              <img
+                css={theme => css`
+                  border: 1px dashed ${theme.colors.primary};
+                  `}
+                src={placeholder}
+                alt="preview"
+              />
+            </div>
           </Col>
 
           <Col span={12}>
-            Actions
+            <div
+              css={css`
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+              `}
+            >
+              <Title level={4}>Actions</Title>
+              <Button
+                css={css`
+                  width: 100%;
+                  margin-bottom: 1em;
+                `}
+              >
+                Save
+              </Button>
+              <Button
+                css={css`
+                  width: 100%;
+                  margin-bottom: 1em;
+                `}
+              >
+                Download (Locally)
+              </Button>
+              <Button
+                css={css`
+                  width: 100%;
+                  margin-bottom: 1em;
+                `}
+              >
+                Remove Image
+              </Button>
+            </div>
           </Col>
         </Row>
       </Card>
