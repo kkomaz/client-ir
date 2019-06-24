@@ -14,6 +14,7 @@ import {
   Typography,
   Upload,
 } from 'antd'
+import { saveAs } from 'file-saver'
 import placeholder from 'assets/placeholder.png'
 
 const { Dragger } = Upload;
@@ -31,8 +32,8 @@ function Home() {
     console.log(width, 'w')
     Resizer.imageFileResizer(
       convertedFile,
-      width,
       height,
+      width,
       'JPEG',
       100,
       0,
@@ -56,7 +57,9 @@ function Home() {
     setHeight(value)
   }
 
-  console.log(currentFile)
+  const saveLocally = () => {
+    saveAs(currentFile, 'hello.jpg')
+  }
 
   return (
     <div>
@@ -148,7 +151,7 @@ function Home() {
                 onClick={fileChangedHandler}
                 disabled={files.length === 0 || _.isEqual(0, width) || _.isEqual(0, height)}
               >
-                Resize it
+                Rescale
               </Button>
             </div>
           </Col>
@@ -194,6 +197,7 @@ function Home() {
             >
               <Title level={4}>Actions</Title>
               <Button
+                type="primary"
                 css={css`
                   width: 100%;
                   margin-bottom: 1em;
@@ -206,10 +210,12 @@ function Home() {
                   width: 100%;
                   margin-bottom: 1em;
                 `}
+                onClick={saveLocally}
               >
                 Download (Locally)
               </Button>
               <Button
+                type="danger"
                 css={css`
                   width: 100%;
                   margin-bottom: 1em;
