@@ -28,8 +28,6 @@ function Home() {
 
   const fileChangedHandler = async () => {
     const convertedFile = files[0]
-    console.log(height, 'h')
-    console.log(width, 'w')
     Resizer.imageFileResizer(
       convertedFile,
       height,
@@ -37,9 +35,9 @@ function Home() {
       'JPEG',
       100,
       0,
-      uri => {
+      uri => (
         setCurrentFile(uri)
-      },
+      ),
       'base64'
     );
   }
@@ -79,22 +77,15 @@ function Home() {
           <Col span={24}>
             <Dragger
               name="file"
-              customRequest={(data) => {
-                return setTimeout(() => {
+              customRequest={data => (
+                setTimeout(() => {
                   data.onSuccess('ok')
                 }, 0)
-              }}
+              )}
               onChange={(info) => {
                 const { status } = info.file;
                 if (status !== 'uploading') {
                   console.log('uploading...')
-                }
-                if (status === 'done') {
-                  setCurrentFile('')
-                  setFiles([info.file])
-                  message.success(`${info.file.name} file uploaded successfully.`);
-                } else if (status === 'error') {
-                  message.error(`${info.file.name} file upload failed.`);
                 }
               }}
               multiple={false}
