@@ -1,29 +1,77 @@
+/** @jsx, jsx */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Button } from 'antd';
+import _ from 'lodash'
 import { UserSession } from 'blockstack'
 import { appConfig } from 'utils/constants'
+import { User } from 'radiks'
+import { Global, css } from '@emotion/core'
+import Login from 'components/Login'
+import RootRoute from './routes'
 
 class Index extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  }
+  constructor(props) {
+    super(props)
 
-  state = {
-    userSession: new UserSession({ appConfig })
+    const userSession = new UserSession({ appConfig })
+
+    this.state = {
+      userSession,
+      loggedIn: false,
+      loggingIn: false,
+    }
   }
 
   componentDidMount = async () => {
     const { userSession } = this.state
 
+    // If already signed in
+    if (userSession.isUserSignedIn()) {
+      const userData = userSession.loadUserData();
+
+      if (userData.username) {
+        this.setState({ loggedIn: true }, async () => {
+          await User.createWithCurrentUser()
+        })
+      } else {
+        return this.setState({ loggedIn: true })
+      }
+    }
+
+    // If pending sign-in
     if (!userSession.isUserSignedIn() && userSession.isSignInPending()) {
       const userData = await userSession.handlePendingSignIn()
+      this.setState({ loggingIn: true })
 
       if (!userData.username) {
-        throw new Error('This app requires a username')
+        return this.setState({
+          loggedIn: true
+        })
       }
 
-      window.location = '/' // eslint-disable-line no-undef
+      const user = User.currentUser()
+      await user.fetch({ decrypt: false })
+
+      try {
+        const radiksUser = await User.findOne({ username: userData.username })
+        const currentUser = await User.createWithCurrentUser()
+
+        if (!radiksUser) {
+          const profileImgUrl = _.get(currentUser, 'attrs.profile.image[0].contentUrl', null)
+          if (profileImgUrl) {
+            currentUser.update({
+              profileImgUrl,
+            })
+            await currentUser.save()
+          }
+        }
+      } catch (e) {
+        console.log(e.message)
+      }
+
+      return this.setState({
+        loggedIn: true,
+        loggingIn: false
+      })
     }
   }
 
@@ -42,21 +90,29 @@ class Index extends Component {
   }
 
   render() {
-    const { userSession } = this.state
-    const { classes } = this.props
+    const { loggedIn, userSession, loggingIn } = this.state
 
     return (
-      <div className={classes}>
+      <div>
         {
-          userSession.isUserSignedIn() ?
-            <Button variant="contained" color="secondary" onClick={this.handleSignOut}>
-              Sign Out
-            </Button> :
-            <div>
-              <Button variant="contained" color="primary" onClick={this.handleSignIn}>
-                Sign In
-              </Button>
+          loggedIn ?
+            <div className="logged-in">
+              <Global
+                styles={css`
+                  * {
+                    font-family: Poppins, sans-serif;
+                  }
+                `}
+              />
+              <RootRoute
+                userSession={userSession}
+              />
             </div>
+            :
+            <Login
+              userSession={userSession}
+              loggingIn={loggingIn}
+            />
         }
       </div>
     )

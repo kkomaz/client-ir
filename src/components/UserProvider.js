@@ -1,31 +1,49 @@
-import React, { useState } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { UserSession, AppConfig } from 'blockstack'
 
-export const UserContext = React.createContext()
+export const UserContext = React.createContext();
 
-function UserProvider(props) {
-  const appConfig = new AppConfig(['store_write', 'publish_data'])
-  const userSession = new UserSession({ appConfig })
+class UserProvider extends Component {
+  static propTypes = {
+    children: PropTypes.any.isRequired,
+    theme: PropTypes.string.isRequired,
+    setTheme: PropTypes.func.isRequired,
+    userSession: PropTypes.object.isRequired,
+  }
 
-  const [userData] = useState(userSession.loadUserData())
+  constructor(props) {
+    super(props)
 
-  const { children } = props
+    const { userSession, theme, setTheme } = props
 
-  return (
-    <UserContext.Provider value={{
-      state: {
-        userData
+    const userData = userSession.loadUserData()
+
+    /* eslint-disable react/no-unused-state */
+    this.state = {
+      sessionUser: {
+        userSession,
+        userData,
+        username: userData.username,
+      },
+      theme: {
+        color: theme,
+        setTheme,
       }
-    }}
-    >
-      {children}
-    </UserContext.Provider>
-  )
-}
+    }
+  }
 
-UserProvider.propTypes = {
-  children: PropTypes.object.isRequired,
+  render() {
+    const { children } = this.props
+
+    return (
+      <UserContext.Provider value={{
+        state: this.state,
+      }}
+      >
+        {children}
+      </UserContext.Provider>
+    )
+  }
 }
 
 export default UserProvider

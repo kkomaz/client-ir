@@ -1,11 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios'
+import { configure } from 'radiks';
+import { UserSession, AppConfig } from 'blockstack';
+import { BrowserRouter } from 'react-router-dom'
 import Index from './pages/index';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<Index />, document.getElementById('root'));
+const setAxiosHeaders = () => {
+  axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_API_URL_DEV : process.env.REACT_APP_API_URL_PROD
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const userSession = new UserSession({
+  appConfig: new AppConfig(['store_write', 'publish_data'])
+})
+
+const apiServer = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_API_URL_DEV : process.env.REACT_APP_API_RADIKS_PROD
+
+setAxiosHeaders()
+configure({
+  apiServer,
+  userSession
+});
+
+
+ReactDOM.render((
+  <BrowserRouter>
+    <Index />
+  </BrowserRouter>
+), document.getElementById('root'));
