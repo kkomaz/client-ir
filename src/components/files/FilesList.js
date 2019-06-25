@@ -78,11 +78,13 @@ function FilesList() {
       title: 'Image',
       dataIndex: 'image',
       key: 'image',
-      render: blob => (
+      render: file => (
         <img
-          src={blob}
+          src={file.attrs.blob}
           alt="resize"
           css={css`
+            background: url("${file.attrs.blob_low_quality}"));
+            background-repeat: no-repeat, no-repeat;
             width: 100px;
             height: 100px;
           `}
@@ -133,11 +135,13 @@ function FilesList() {
   const data = _.map(files, file => ({
     key: file.attrs._id,
     name: file.attrs.name,
-    image: file.attrs.blob,
+    image: file,
     max_height: file.attrs.max_height,
     max_width: file.attrs.max_width,
     actions: file,
   }))
+
+  console.log(files)
 
   return (
     <div>

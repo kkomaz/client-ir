@@ -32,15 +32,29 @@ function Home() {
 
   const saveToGaia = useCallback(
     () => {
-      const params = {
-        name: files[0].name,
-        blob: currentFile,
-        max_height: height,
-        max_width: width,
-      }
+      let blowLq
 
-      return dispatch(
-        createFile(params)
+      Resizer.imageFileResizer(
+        files[0],
+        100,
+        100,
+        'JPEG',
+        30,
+        0,
+        (uri) => {
+          blowLq = uri
+          const params = {
+            name: files[0].name,
+            blob: currentFile,
+            blob_low_quality: blowLq,
+            max_height: height,
+            max_width: width,
+          }
+
+          return dispatch(
+            createFile(params)
+          )
+        }
       )
     }, [dispatch, files, currentFile, height, width]
   )
