@@ -9,6 +9,12 @@ export default class File extends Model {
     },
     blob: {
       type: String,
+    },
+    max_height: {
+      type: Number,
+    },
+    max_width: {
+      type: Number,
     }
   }
 }

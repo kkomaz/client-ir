@@ -1,19 +1,16 @@
+import File from 'models/file'
 import {
   REQUEST_CREATE_FILE,
   CREATE_FILE_SUCCESS,
   CREATE_FILE_FAIL,
 } from '..'
-import File from 'models/file'
 
-const createFile = (name, blob, openNotificationWithIcon) => (
+const createFile = (params, openNotificationWithIcon) => (
   async (dispatch) => {
     dispatch({ type: REQUEST_CREATE_FILE })
 
     try {
-      const file = new File({
-        name,
-        blob,
-      })
+      const file = new File(params)
       await file.save()
 
       dispatch({

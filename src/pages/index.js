@@ -37,9 +37,18 @@ function Home() {
   };
 
   const saveToGaia = useCallback(
-    () => dispatch(
-      createFile(files[0].name, currentFile, openNotificationWithIcon),
-    ), [dispatch, files, currentFile]
+    () => {
+      const params = {
+        name: files[0].name,
+        blob: currentFile,
+        max_height: height,
+        max_width: width,
+      }
+
+      return dispatch(
+        createFile(params, openNotificationWithIcon)
+      )
+    }, [dispatch, files, currentFile, height, width]
   )
 
   const fileChangedHandler = async () => {
