@@ -12,7 +12,7 @@ const {
 } = Layout
 
 function IrSidebar() {
-  const { history } = useReactRouter();
+  const { history, location } = useReactRouter();
 
   const onClick = (value) => {
     if (value.key === 'resize') {
@@ -35,7 +35,9 @@ function IrSidebar() {
           background: inherit;
         `}
         onClick={onClick}
-        defaultSelectedKeys={['resize']}
+        defaultSelectedKeys={[
+          (location.pathname === '/' || location.pathname === '/resize') ? 'resize' : location.pathname.substr(1)
+        ]}
       >
         <Menu.Item
           css={css`
