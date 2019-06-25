@@ -70,7 +70,7 @@ function Navbar(props) {
 }
 
 Navbar.propTypes = {
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.string.isRequired,
   userSession: PropTypes.object.isRequired,
 }
 

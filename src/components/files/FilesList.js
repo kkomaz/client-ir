@@ -95,7 +95,7 @@ function FilesList() {
       align: 'center',
       title: 'Max Width',
       dataIndex: 'max_width',
-      key: 'max_height',
+      key: 'max_width',
       render: width => <p>{`${width}px`}</p>
     },
     {

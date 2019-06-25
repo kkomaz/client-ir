@@ -32,7 +32,7 @@ class Login extends Component {
     }
 
     return (
-      <div container spacing={2}>
+      <div>
         {
           loadingUser ? <div>Loading...</div> :
           <div className="login-blockstack">
