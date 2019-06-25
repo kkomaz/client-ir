@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchFiles } from 'actions/file'
 import { createSelector } from 'reselect'
 import {
+  Button,
   Table,
 } from 'antd'
+import { saveAs } from 'file-saver'
 
 const makeSelectFiles = () => (
   createSelector(
@@ -16,8 +18,12 @@ const makeSelectFiles = () => (
   )
 )
 
-function FilesList(props) {
+function FilesList() {
   const dispatch = useDispatch()
+  const selectFiles = useMemo(
+    makeSelectFiles,
+    []
+  )
 
   const startFetchLists = useCallback(
     () => dispatch(
@@ -27,12 +33,11 @@ function FilesList(props) {
 
   useEffect(() => {
     startFetchLists()
-  }, [])
+  }, [startFetchLists])
 
-  const selectFiles = useMemo(
-    makeSelectFiles,
-    []
-  )
+  const saveLocally = (file) => {
+    saveAs(file.attrs.blob, file.attrs.name)
+  }
 
   const files = useSelector(state => selectFiles(state))
 
@@ -69,6 +74,30 @@ function FilesList(props) {
       dataIndex: 'max_height',
       key: 'max_height',
       render: height => <p>{`${height}px`}</p>
+    },
+    {
+      title: 'Actions',
+      align: 'center',
+      dataIndex: 'actions',
+      key: 'actions',
+      render: file => (
+        <div>
+          <Button
+            css={css`
+              margin-right: 10px;
+            `}
+            type="danger"
+          >
+            Delete
+          </Button>
+          <Button
+            type="primary"
+            onClick={() => saveLocally(file)}
+          >
+            Download
+          </Button>
+        </div>
+      )
     }
   ]
 
@@ -78,6 +107,7 @@ function FilesList(props) {
     image: file.attrs.blob,
     max_height: file.attrs.max_height,
     max_width: file.attrs.max_width,
+    actions: file,
   }))
 
   return (
