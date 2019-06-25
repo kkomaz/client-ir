@@ -1,6 +1,17 @@
-import React, { Component } from 'react'
+/** @jsx jsx */
+import { Component } from 'react'
+import { css, jsx } from '@emotion/core'
 import PropTypes from 'prop-types'
-import { Button } from 'antd'
+import {
+  Button,
+  Card,
+  Row,
+  Col,
+  Typography,
+} from 'antd'
+import Container from 'components/Common/Container'
+import EZResize from 'assets/EZResize.png'
+import polaroids from 'assets/polaroids.png'
 
 class Login extends Component {
   state = {
@@ -35,11 +46,77 @@ class Login extends Component {
       <div>
         {
           loadingUser ? <div>Loading...</div> :
-          <div className="login-blockstack">
-            <Button variant="contained" color="primary" onClick={this.signIn}>
-              Sign In
-            </Button>
-          </div>
+          <Container>
+            <div
+              className="login-blockstack"
+              css={css`
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              `}
+            >
+              <Card
+                style={{
+                  maxWidth: 700,
+                  border: '2px solid #e8e8e8',
+                }}
+                cover={
+                  <img
+                    alt="example"
+                    src={polaroids}
+                  />
+                }
+              >
+                <Row>
+                  <Col span={24}>
+                    <div
+                      css={css`
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
+                      `}
+                    >
+                      <div
+                        css={css`
+                          margin-bottom: 2em;
+                          text-align: center;
+                        `}
+                      >
+                        <img src={EZResize} alt="logo" />
+                        <br />
+                        <br />
+                        <Typography.Text>
+                          Simple, easy, resize tool.  Save locally or in your EZResize Account
+                        </Typography.Text>
+                      </div>
+                      <div
+                        css={css`
+                          margin-bottom: 1em;
+                        `}
+                      >
+                        <Button variant="contained" type="primary" onClick={this.signIn}>
+                          Sign In With Blockstack
+                        </Button>
+                      </div>
+                      <div>
+                        <a
+                          href="https://landing.debutapp.social"
+                          rel="noopener noreferrer"
+                          target="_blank"
+                          css={css`
+                            font-weight: 800;
+                          `}
+                        >
+                          About EZResize
+                        </a>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              </Card>
+            </div>
+          </Container>
         }
       </div>
     );

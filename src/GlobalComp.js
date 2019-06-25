@@ -100,17 +100,21 @@ class GlobalComp extends Component {
 
     return (
       <ThemeProvider theme={theme}>
+        <Global
+          styles={css`
+            * {
+              font-family: Poppins, sans-serif;
+            }
+
+            body {
+              background: #fafbfc;
+            }
+          `}
+        />
         <div>
           {
             loggedIn ?
               <div className="logged-in">
-                <Global
-                  styles={css`
-                    * {
-                      font-family: Poppins, sans-serif;
-                    }
-                  `}
-                />
                 <RootRoute
                   userSession={userSession}
                 />

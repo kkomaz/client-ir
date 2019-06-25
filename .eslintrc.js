@@ -8,6 +8,7 @@ module.exports = {
     "operator-linebreak": 0,
     "no-underscore-dangle": 0,
     "arrow-body-style": 0,
+    "max-len": 0,
     "arrow-parens": 0,
     "react/jsx-filename-extension": 0,
     "react/jsx-wrap-multilines": 0,
