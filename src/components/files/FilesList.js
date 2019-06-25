@@ -8,8 +8,11 @@ import { createSelector } from 'reselect'
 import {
   Button,
   Table,
+  Modal,
 } from 'antd'
 import { saveAs } from 'file-saver'
+
+const { confirm } = Modal
 
 const makeSelectFiles = () => (
   createSelector(
@@ -41,14 +44,26 @@ function FilesList() {
 
   const files = useSelector(state => selectFiles(state))
 
+  const showDeleteConfirm = (file) => {
+    confirm({
+      title: 'Are you sure you want to delete this image?',
+      content: 'Deleting this image will remove it from your storage permanently',
+      onOk() {
+        console.log(file)
+      }
+    })
+  }
+
   const columns = [
     {
+      align: 'center',
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
       render: text => <p>{text}</p>
     },
     {
+      align: 'center',
       title: 'Image',
       dataIndex: 'image',
       key: 'image',
@@ -64,12 +79,14 @@ function FilesList() {
       )
     },
     {
+      align: 'center',
       title: 'Max Width',
       dataIndex: 'max_width',
       key: 'max_height',
       render: width => <p>{`${width}px`}</p>
     },
     {
+      align: 'center',
       title: 'Max Height',
       dataIndex: 'max_height',
       key: 'max_height',
@@ -83,6 +100,7 @@ function FilesList() {
       render: file => (
         <div>
           <Button
+            onClick={() => showDeleteConfirm(file)}
             css={css`
               margin-right: 10px;
             `}
