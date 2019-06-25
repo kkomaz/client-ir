@@ -27,7 +27,7 @@ function RootRoute(props) {
       setTheme={setTheme}
     >
       <Layout>
-        <Navbar theme={theme} />
+        <Navbar theme={theme} userSession={userSession} />
 
         <Container
           css={css`

@@ -12,7 +12,18 @@ const {
 } = Layout
 
 function Navbar(props) {
-  const { theme } = props
+  const { theme, userSession } = props
+
+  const handleSignOut = () => {
+    userSession.signUserOut()
+    window.location = '/' // eslint-disable-line no-undef
+  }
+
+  const onMenuClick = (value) => {
+    if (value.key === 'sign-out') {
+      handleSignOut()
+    }
+  }
 
   return (
     <Header
@@ -36,14 +47,15 @@ function Navbar(props) {
           defaultSelectedKeys={['2']}
           style={{ lineHeight: '64px' }}
           theme={theme}
+          onClick={onMenuClick}
         >
           <Menu.Item
-            key="1"
+            key="username"
           >
             kkomaz.id
           </Menu.Item>
           <Menu.Item
-            key="2"
+            key="sign-out"
             css={css`
               position: absolute !important;
               right: 0;
@@ -59,6 +71,7 @@ function Navbar(props) {
 
 Navbar.propTypes = {
   theme: PropTypes.object.isRequired,
+  userSession: PropTypes.object.isRequired,
 }
 
 export default Navbar
