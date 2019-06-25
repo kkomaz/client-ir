@@ -3,6 +3,7 @@ import { Component } from 'react'
 import { css, jsx } from '@emotion/core'
 import PropTypes from 'prop-types'
 import {
+  Avatar,
   Button,
   Card,
   Row,
@@ -12,6 +13,7 @@ import {
 import Container from 'components/Common/Container'
 import EZResize from 'assets/EZResize.png'
 import polaroids from 'assets/polaroids.png'
+import logo2 from 'assets/logo-2.png'
 
 class Login extends Component {
   state = {
@@ -83,7 +85,10 @@ class Login extends Component {
                           text-align: center;
                         `}
                       >
-                        <img src={EZResize} alt="logo" />
+                        <div>
+                          <img src={EZResize} alt="logo" />
+                          <Avatar src={logo2} alt="logo-2" size={64} />
+                        </div>
                         <br />
                         <br />
                         <Typography.Text>

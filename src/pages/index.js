@@ -76,7 +76,17 @@ function Home() {
     );
   }
 
+  const removeImage = () => {
+    setCurrentFile('')
+    setHeight(0)
+    setWidth(0)
+    setFiles([])
+  }
+
   const replaceFile = (file) => {
+    if (currentFile) {
+      removeImage()
+    }
     setFiles([file])
     return false
   }
@@ -87,13 +97,6 @@ function Home() {
 
   const onHeightChange = (value) => {
     setHeight(value)
-  }
-
-  const removeImage = () => {
-    setCurrentFile('')
-    setHeight(0)
-    setWidth(0)
-    setFiles([])
   }
 
   const saveLocally = () => {
@@ -121,6 +124,7 @@ function Home() {
               fileList={files}
               accept=".jpeg, .png, .webp"
               disabled={createFileLoading}
+              onRemove={removeImage}
             >
               <p className="ant-upload-drag-icon">
                 <Icon type="inbox" />
