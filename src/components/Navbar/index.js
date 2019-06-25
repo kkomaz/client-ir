@@ -1,11 +1,15 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
+import { useContext } from 'react'
 import PropTypes from 'prop-types'
 import Container from 'components/Common/Container'
 import {
+  Avatar,
   Layout,
   Menu,
 } from 'antd';
+import logo from 'assets/logo.png'
+import { UserContext } from 'components/UserProvider'
 
 const {
   Header,
@@ -13,6 +17,7 @@ const {
 
 function Navbar(props) {
   const { theme, userSession } = props
+  const userContext = useContext(UserContext)
 
   const handleSignOut = () => {
     userSession.signUserOut()
@@ -50,9 +55,18 @@ function Navbar(props) {
           onClick={onMenuClick}
         >
           <Menu.Item
+            style={{
+              paddingLeft: 0,
+            }}
             key="username"
           >
-            kkomaz.id
+            <Avatar
+              src={logo}
+              css={css`
+                margin-right: 10px;
+              `}
+            />
+            {userContext.state.sessionUser.username}
           </Menu.Item>
           <Menu.Item
             key="sign-out"
