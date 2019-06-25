@@ -14,7 +14,6 @@ import {
   Row,
   Typography,
   Upload,
-  notification,
 } from 'antd'
 import { saveAs } from 'file-saver'
 import placeholder from 'assets/placeholder.png'
@@ -29,13 +28,6 @@ function Home() {
   const [currentFile, setCurrentFile] = useState('')
   const dispatch = useDispatch()
 
-  const openNotificationWithIcon = (type, message, description) => {
-    notification[type]({
-      message,
-      description,
-    });
-  };
-
   const saveToGaia = useCallback(
     () => {
       const params = {
@@ -46,7 +38,7 @@ function Home() {
       }
 
       return dispatch(
-        createFile(params, openNotificationWithIcon)
+        createFile(params)
       )
     }, [dispatch, files, currentFile, height, width]
   )
@@ -144,7 +136,7 @@ function Home() {
               `}
             >
               <span>
-                width:
+                max-width:
               </span>
               <InputNumber
                 min={0}
@@ -164,7 +156,7 @@ function Home() {
               </span>
 
               <span>
-                height:
+                max-height:
               </span>
               <InputNumber
                 min={0}

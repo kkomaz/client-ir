@@ -3,7 +3,7 @@ import { jsx, css } from '@emotion/core'
 import _ from 'lodash'
 import { useEffect, useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchFiles } from 'actions/file'
+import { fetchFiles, deleteFile } from 'actions/file'
 import { createSelector } from 'reselect'
 import {
   Button,
@@ -42,14 +42,25 @@ function FilesList() {
     saveAs(file.attrs.blob, file.attrs.name)
   }
 
+  const requestDeleteFile = useCallback(
+    file => {
+      return dispatch(
+        deleteFile(file)
+      )
+    }, [dispatch]
+  )
+
   const files = useSelector(state => selectFiles(state))
 
   const showDeleteConfirm = (file) => {
     confirm({
       title: 'Are you sure you want to delete this image?',
       content: 'Deleting this image will remove it from your storage permanently',
+      okType: 'danger',
+      okText: 'Yes',
+      cancelText: 'No',
       onOk() {
-        console.log(file)
+        requestDeleteFile(file)
       }
     })
   }

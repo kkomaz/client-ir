@@ -5,7 +5,7 @@ import {
   CREATE_FILE_FAIL,
 } from '..'
 
-const createFile = (params, openNotificationWithIcon) => (
+const createFile = params => (
   async (dispatch) => {
     dispatch({ type: REQUEST_CREATE_FILE })
 
@@ -18,13 +18,11 @@ const createFile = (params, openNotificationWithIcon) => (
         payload: {
           file,
         },
-        openNotificationWithIcon,
       })
     } catch (error) {
       dispatch({
         type: CREATE_FILE_FAIL,
         error,
-        openNotificationWithIcon
       })
     }
   }
