@@ -10,19 +10,24 @@ import openNotificationWithIcon from 'utils/notification/openNotificationWithIco
 
 const defaultState = {
   list: [],
+  createFileLoading: false,
 }
 
 export default function viewReducer(state = defaultState, action) {
   switch (action.type) {
     case REQUEST_CREATE_FILE: {
-      return state;
+      return { ...state, createFileLoading: true }
     }
     case CREATE_FILE_FAIL: {
       return state
     }
     case CREATE_FILE_SUCCESS: {
       openNotificationWithIcon('success', 'File Saved', 'File Successfully Saved')
-      return { ...state, list: [...state.list, action.payload.file] }
+      return {
+        ...state,
+        list: [...state.list, action.payload.file],
+        createFileLoading: false,
+      }
     }
     case DELETE_FILE_SUCCESS: {
       openNotificationWithIcon('success', 'File Deleted', 'File Successfully Deleted')

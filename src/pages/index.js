@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { useState, useCallback } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createFile } from 'actions/file'
 import { jsx, css } from '@emotion/core'
 import _ from 'lodash'
@@ -27,6 +27,8 @@ function Home() {
   const [height, setHeight] = useState(0)
   const [currentFile, setCurrentFile] = useState('')
   const dispatch = useDispatch()
+
+  const createFileLoading = useSelector(state => state.file.createFileLoading)
 
   const saveToGaia = useCallback(
     () => {
@@ -100,16 +102,11 @@ function Home() {
                   data.onSuccess('ok')
                 }, 0)
               )}
-              onChange={(info) => {
-                const { status } = info.file;
-                if (status !== 'uploading') {
-                  console.log('uploading...')
-                }
-              }}
               multiple={false}
               beforeUpload={replaceFile}
               fileList={files}
               accept=".jpeg, .png, .webp"
+              disabled={createFileLoading}
             >
               <p className="ant-upload-drag-icon">
                 <Icon type="inbox" />
@@ -168,7 +165,12 @@ function Home() {
               />
               <Button
                 onClick={fileChangedHandler}
-                disabled={files.length === 0 || _.isEqual(0, width) || _.isEqual(0, height)}
+                disabled={
+                  files.length === 0 ||
+                  _.isEqual(0, width) ||
+                  _.isEqual(0, height) ||
+                  createFileLoading
+                }
               >
                 Rescale
               </Button>
@@ -220,6 +222,7 @@ function Home() {
             >
               <Title level={4}>Actions</Title>
               <Button
+                loading={createFileLoading}
                 onClick={saveToGaia}
                 type="primary"
                 css={css`
@@ -231,6 +234,7 @@ function Home() {
                 Save (Every save will create a new file)
               </Button>
               <Button
+                loading={createFileLoading}
                 css={css`
                   width: 100%;
                   margin-bottom: 1em;
@@ -241,6 +245,7 @@ function Home() {
                 Download (Locally)
               </Button>
               <Button
+                loading={createFileLoading}
                 onClick={removeImage}
                 type="danger"
                 css={css`
