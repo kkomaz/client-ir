@@ -76,7 +76,7 @@ function Premium() {
           <Card>
             <ProductHeader
               title="EZResize Premium"
-              price="$9.99"
+              price="$4.99"
             />
             <ProductCheck text="Unlimited file uploads" />
 
