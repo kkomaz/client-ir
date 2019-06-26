@@ -15,6 +15,7 @@ import Navbar from 'components/Navbar'
 import IrSidebar from 'components/Sidebar'
 import FilesRoutes from 'pages/files/routes'
 import Home from '.'
+import Donate from './donate'
 
 function RootRoute(props) {
   const { userSession } = props
@@ -59,6 +60,12 @@ function RootRoute(props) {
                   path="/files"
                   render={({ match }) => (
                     <FilesRoutes match={match} />
+                  )}
+                />
+                <Route
+                  path="/donate"
+                  render={() => (
+                    <Donate />
                   )}
                 />
               </Switch>
