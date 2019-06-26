@@ -16,6 +16,7 @@ import IrSidebar from 'components/Sidebar'
 import FilesRoutes from 'pages/files/routes'
 import Home from '.'
 import Donate from './donate'
+import Premium from './premium'
 
 function RootRoute(props) {
   const { userSession } = props
@@ -66,6 +67,12 @@ function RootRoute(props) {
                   path="/donate"
                   render={() => (
                     <Donate />
+                  )}
+                />
+                <Route
+                  path="/premium"
+                  render={() => (
+                    <Premium />
                   )}
                 />
               </Switch>
