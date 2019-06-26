@@ -52,6 +52,10 @@ function IrSidebar() {
           <Icon type="file" />
           <span>My files</span>
         </Menu.Item>
+        <Menu.Item key="premium">
+          <Icon type="unlock" />
+          <span>EZResize Premium</span>
+        </Menu.Item>
         <Menu.Item key="donate">
           <Icon type="credit-card" />
           <span>Donate</span>
@@ -60,6 +64,7 @@ function IrSidebar() {
       <a
         href="https://www.producthunt.com/posts/debut-3?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-debut-3"
         target="_blank"
+        rel="noopener noreferrer"
       >
         <img
           src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=142830&theme=light"
