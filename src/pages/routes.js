@@ -72,6 +72,18 @@ function RootRoute(props) {
             </Layout>
           </Layout>
         </Container>
+        <Layout.Footer
+          css={css`
+            margin-left: 200px;
+            text-align: center;
+
+            @media (max-width: 689px) {
+              margin-left: 0;
+            }
+          `}
+        >
+          TechRally ©2019 Created by TechRally
+        </Layout.Footer>
       </Layout>
     </UserProvider>
   )
