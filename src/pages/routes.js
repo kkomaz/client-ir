@@ -29,7 +29,10 @@ function RootRoute(props) {
       setTheme={setTheme}
     >
       <Layout>
-        <Navbar theme={theme} userSession={userSession} />
+        <Navbar
+          theme={theme}
+          userSession={userSession}
+        />
 
         <Container
           css={css`

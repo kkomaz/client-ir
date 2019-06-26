@@ -52,10 +52,12 @@ function IrSidebar() {
           <Icon type="file" />
           <span>My files</span>
         </Menu.Item>
-        <Menu.Item key="premium">
+        {/*
+          <Menu.Item key="premium">
           <Icon type="unlock" />
           <span>EZResize Premium</span>
-        </Menu.Item>
+          </Menu.Item>
+        */}
         <Menu.Item key="donate">
           <Icon type="credit-card" />
           <span>Donate</span>

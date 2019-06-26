@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { useState, useContext } from 'react'
+import _ from 'lodash'
 import { jsx, css } from '@emotion/core'
 import {
   Button,
@@ -17,16 +18,15 @@ import { UserContext } from 'components/UserProvider'
 function Premium() {
   const [status, setStatus] = useState(false)
   const userContext = useContext(UserContext)
+  const { state: { sessionUser } } = userContext
 
   const toggleStatus = async () => {
     setStatus(!status)
 
-    const { state } = userContext
-
-    state.sessionUser.ezUser.update({
+    sessionUser.ezUser.update({
       premium: !status
     })
-    const result = await state.sessionUser.ezUser.save()
+    const result = await sessionUser.ezUser.save()
     userContext.setEzUser(result)
   }
 
@@ -59,7 +59,11 @@ function Premium() {
                 text-align: center;
               `}
             >
-              <Button type="primary">
+              <Button
+                type="primary"
+                disabled={!_.get(sessionUser, 'ezUser.attrs.premium')}
+                onClick={toggleStatus}
+              >
                 Get Free
               </Button>
             </div>
@@ -89,7 +93,11 @@ function Premium() {
                 text-align: center;
               `}
             >
-              <Button type="primary">
+              <Button
+                type="primary"
+                disabled={_.get(sessionUser, 'ezUser.attrs.premium')}
+                onClick={toggleStatus}
+              >
                 Get Premium
               </Button>
             </div>
