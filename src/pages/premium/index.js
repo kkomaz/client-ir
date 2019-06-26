@@ -1,4 +1,6 @@
 /** @jsx jsx */
+import { useState } from 'react'
+import { User } from 'radiks'
 import { jsx, css } from '@emotion/core'
 import {
   Button,
@@ -13,8 +15,25 @@ import {
 } from 'components/Product'
 
 function Premium() {
+  const [status, setStatus] = useState(false)
+
+  const toggleStatus = async () => {
+    setStatus(!status)
+
+    const result = await User.fetchList()
+    console.log(result)
+
+    // EzUser.update({
+    //   premium: !status
+    // })
+    // await EzUser.save()
+  }
+
   return (
     <div>
+      <Button onClick={toggleStatus}>
+        Update
+      </Button>
       <Row gutter={16}>
         <Col
           css={css`

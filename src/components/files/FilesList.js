@@ -83,7 +83,7 @@ function FilesList() {
           src={file.attrs.blob}
           alt="resize"
           css={css`
-            background: url("${file.attrs.blob_low_quality}"));
+            background: url("${file.attrs.blob_lq}"));
             background-repeat: no-repeat, no-repeat;
             width: 100px;
             height: 100px;

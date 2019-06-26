@@ -46,7 +46,7 @@ function Home() {
           const params = {
             name: files[0].name,
             blob: currentFile,
-            blob_low_quality: blowLq,
+            blob_lq: blowLq,
             max_height: height,
             max_width: width,
           }

@@ -1,5 +1,5 @@
 /** @jsx, jsx */
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import _ from 'lodash'
 import { UserSession } from 'blockstack'
 import { appConfig } from 'utils/constants'
@@ -8,6 +8,7 @@ import { Global, css } from '@emotion/core'
 import Login from 'components/Login'
 import { ThemeProvider } from 'emotion-theming'
 import colors from 'utils/colors'
+import EzUser from 'models/ezUser'
 import RootRoute from './pages/routes'
 
 const theme = {
@@ -36,7 +37,7 @@ class GlobalComp extends Component {
 
       if (userData.username) {
         this.setState({ loggedIn: true }, async () => {
-          await User.createWithCurrentUser()
+          await EzUser.createWithCurrentUser()
         })
       } else {
         return this.setState({ loggedIn: true })
@@ -54,21 +55,12 @@ class GlobalComp extends Component {
         })
       }
 
-      const user = User.currentUser()
-      await user.fetch({ decrypt: false })
-
       try {
-        const radiksUser = await User.findOne({ username: userData.username })
-        const currentUser = await User.createWithCurrentUser()
+        const ezUser = await EzUser.createWithCurrentUser()
 
-        if (!radiksUser) {
-          const profileImgUrl = _.get(currentUser, 'attrs.profile.image[0].contentUrl', null)
-          if (profileImgUrl) {
-            currentUser.update({
-              profileImgUrl,
-            })
-            await currentUser.save()
-          }
+        if (!_.has(ezUser, 'attrs.premium')) {
+          ezUser.update({ premium: false })
+          await ezUser.save()
         }
       } catch (e) {
         console.log(e.message)
