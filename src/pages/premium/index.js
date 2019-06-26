@@ -1,6 +1,5 @@
 /** @jsx jsx */
-import { useState } from 'react'
-import { User } from 'radiks'
+import { useState, useContext } from 'react'
 import { jsx, css } from '@emotion/core'
 import {
   Button,
@@ -13,20 +12,22 @@ import {
   ProductCheck,
   ProductHeader
 } from 'components/Product'
+import { UserContext } from 'components/UserProvider'
 
 function Premium() {
   const [status, setStatus] = useState(false)
+  const userContext = useContext(UserContext)
 
   const toggleStatus = async () => {
     setStatus(!status)
 
-    const result = await User.fetchList()
-    console.log(result)
+    const { state } = userContext
 
-    // EzUser.update({
-    //   premium: !status
-    // })
-    // await EzUser.save()
+    state.sessionUser.ezUser.update({
+      premium: !status
+    })
+    const result = await state.sessionUser.ezUser.save()
+    userContext.setEzUser(result)
   }
 
   return (
