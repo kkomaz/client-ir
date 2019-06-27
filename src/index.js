@@ -35,7 +35,7 @@ const userSession = new UserSession({
   appConfig: new AppConfig(['store_write', 'publish_data'])
 })
 
-const apiServer = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_API_URL_DEV : process.env.REACT_APP_API_RADIKS_PROD
+const apiServer = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_API_URL_DEV : process.env.REACT_APP_API_URL_PROD
 
 const store = configureStore()
 
