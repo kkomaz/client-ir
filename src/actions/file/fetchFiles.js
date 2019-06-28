@@ -10,7 +10,7 @@ const fetchFiles = openNotificationWithIcon => (
     dispatch({ type: REQUEST_FETCH_FILES })
 
     try {
-      const result = await File.fetchList()
+      const result = await File.fetchOwnList()
       dispatch({
         type: FETCH_FILES_SUCCESS,
         payload: {
