@@ -93,17 +93,23 @@ function FilesList() {
     },
     {
       align: 'center',
-      title: 'Max Width',
-      dataIndex: 'max_width',
-      key: 'max_width',
-      render: width => <p>{`${width}px`}</p>
+      title: 'Width',
+      dataIndex: 'width',
+      key: 'width',
+      render: width => {
+        const text = width ? `${width}px` : '-'
+        return <p>{text}</p>;
+      },
     },
     {
       align: 'center',
-      title: 'Max Height',
-      dataIndex: 'max_height',
-      key: 'max_height',
-      render: height => <p>{`${height}px`}</p>
+      title: 'Height',
+      dataIndex: 'height',
+      key: 'height',
+      render: height => {
+        const text = height ? `${height}px` : '-'
+        return <p>{text}</p>;
+      },
     },
     {
       title: 'Actions',
@@ -136,12 +142,10 @@ function FilesList() {
     key: file.attrs._id,
     name: file.attrs.name,
     image: file,
-    max_height: file.attrs.max_height,
-    max_width: file.attrs.max_width,
+    height: file.attrs.new_height,
+    width: file.attrs.new_width,
     actions: file,
   }))
-
-  console.log(files)
 
   return (
     <div>

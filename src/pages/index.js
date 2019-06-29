@@ -17,6 +17,7 @@ import {
 } from 'antd'
 import { saveAs } from 'file-saver'
 import placeholder from 'assets/placeholder.png'
+import { dataUrlToFile } from 'utils/file'
 
 const { Dragger } = Upload;
 const { Title } = Typography
@@ -25,6 +26,8 @@ function Home() {
   const [files, setFiles] = useState([])
   const [width, setWidth] = useState(0)
   const [height, setHeight] = useState(0)
+  const [newWidth, setNewWidth] = useState(0)
+  const [newHeight, setNewHeight] = useState(0)
   const [currentFile, setCurrentFile] = useState('')
   const dispatch = useDispatch()
 
@@ -49,6 +52,8 @@ function Home() {
             blob_lq: blowLq,
             max_height: height,
             max_width: width,
+            new_height: newHeight,
+            new_width: newWidth,
           }
 
           return dispatch(
@@ -56,8 +61,26 @@ function Home() {
           )
         }
       )
-    }, [dispatch, files, currentFile, height, width]
+    }, [dispatch, files, currentFile, height, width, newHeight, newWidth]
   )
+
+  const setNewDimension = (uri) => {
+    const file = dataUrlToFile(uri, 'sample.txt')
+    const fr = new FileReader
+
+    fr.onload = () => {
+      const img = new Image
+
+      img.onload = () => {
+        setNewWidth(img.width)
+        setNewHeight(img.height)
+      };
+
+      img.src = fr.result;
+    };
+
+    fr.readAsDataURL(file);
+  }
 
   const fileChangedHandler = async () => {
     const convertedFile = files[0]
@@ -71,6 +94,7 @@ function Home() {
       0,
       (uri) => {
         setCurrentFile(uri)
+        setNewDimension(uri)
       },
       'base64'
     );
@@ -79,7 +103,9 @@ function Home() {
   const removeImage = () => {
     setCurrentFile('')
     setHeight(0)
+    setNewHeight(0)
     setWidth(0)
+    setNewWidth(0)
     setFiles([])
   }
 
@@ -225,6 +251,17 @@ function Home() {
                   alt="preview"
                 />
               </div>
+              {
+                !_.isEmpty(currentFile) &&
+                <p
+                  css={css`
+                    text-align: center;
+                    margin-top: 1em;
+                  `}
+                >
+                  Scaled Dimensions: {newWidth} x {newHeight}
+                </p>
+              }
             </div>
           </Col>
         </Row>

@@ -18,6 +18,12 @@ export default class File extends Model {
     },
     max_width: {
       type: Number,
+    },
+    new_height: {
+      type: Number,
+    },
+    new_width: {
+      type: Number,
     }
   }
 }
