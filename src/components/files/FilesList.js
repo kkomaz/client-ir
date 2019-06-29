@@ -95,7 +95,13 @@ function FilesList(props) {
       dataIndex: 'actions',
       key: 'actions',
       render: file => (
-        <div>
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          `}
+        >
           <Button
             onClick={() => showDeleteConfirm(file)}
             css={css`
