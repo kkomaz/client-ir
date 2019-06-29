@@ -1,5 +1,12 @@
 /** @jsx jsx */
-import { useState } from 'react'
+import {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchFiles } from 'actions/file'
 import { jsx, css } from '@emotion/core'
 import PropTypes from 'prop-types'
 import UserProvider from 'components/UserProvider'
@@ -14,13 +21,42 @@ import {
 import Navbar from 'components/Navbar'
 import IrSidebar from 'components/Sidebar'
 import FilesRoutes from 'pages/files/routes'
+import { createSelector } from 'reselect'
 import Home from '.'
 import Donate from './donate'
 import Premium from './premium'
 
+const makeSelectFiles = () => (
+  createSelector(
+    state => state.file.list,
+    files => files
+  )
+)
+
 function RootRoute(props) {
   const { userSession } = props
   const [theme, setTheme] = useState('light')
+  const [filesRequested, setFilesRequested] = useState(false)
+
+  const dispatch = useDispatch()
+  const selectFiles = useMemo(
+    makeSelectFiles,
+    []
+  )
+  const files = useSelector(state => selectFiles(state))
+
+  const startFetchLists = useCallback(
+    () => dispatch(
+      fetchFiles()
+    ), [dispatch]
+  )
+
+  useEffect(() => {
+    if (!filesRequested) {
+      setFilesRequested(true)
+      startFetchLists()
+    }
+  }, [startFetchLists, filesRequested])
 
   return (
     <UserProvider
@@ -57,13 +93,18 @@ function RootRoute(props) {
                   exact
                   path="/"
                   render={() => (
-                    <Home />
+                    <Home
+                      files={files}
+                    />
                   )}
                 />
                 <Route
                   path="/files"
                   render={({ match }) => (
-                    <FilesRoutes match={match} />
+                    <FilesRoutes
+                      files={files}
+                      match={match}
+                    />
                   )}
                 />
                 <Route

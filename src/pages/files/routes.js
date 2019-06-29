@@ -4,14 +4,14 @@ import { Switch, Route } from 'react-router-dom'
 import { FilesList } from 'components/files'
 
 const FilesRoute = (props) => {
-  const { match } = props
+  const { match, files } = props
 
   return (
     <Switch>
       <Route
         exact
         path={`${match.url}`}
-        render={() => <FilesList />}
+        render={() => <FilesList files={files} />}
       />
     </Switch>
   )
@@ -20,7 +20,8 @@ const FilesRoute = (props) => {
 FilesRoute.propTypes = {
   match: PropTypes.shape({
     url: PropTypes.string.isRequired,
-  }).isRequired
+  }).isRequired,
+  files: PropTypes.array.isRequired,
 }
 
 export default FilesRoute

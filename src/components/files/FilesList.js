@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
+import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { useEffect, useCallback, useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchFiles, deleteFile } from 'actions/file'
-import { createSelector } from 'reselect'
+import { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
+import { deleteFile } from 'actions/file'
 import {
   Button,
   Table,
@@ -14,29 +14,9 @@ import { saveAs } from 'file-saver'
 
 const { confirm } = Modal
 
-const makeSelectFiles = () => (
-  createSelector(
-    state => state.file.list,
-    files => files
-  )
-)
-
-function FilesList() {
+function FilesList(props) {
+  const { files } = props
   const dispatch = useDispatch()
-  const selectFiles = useMemo(
-    makeSelectFiles,
-    []
-  )
-
-  const startFetchLists = useCallback(
-    () => dispatch(
-      fetchFiles()
-    ), [dispatch]
-  )
-
-  useEffect(() => {
-    startFetchLists()
-  }, [startFetchLists])
 
   const saveLocally = (file) => {
     saveAs(file.attrs.blob, file.attrs.name)
@@ -49,8 +29,6 @@ function FilesList() {
       )
     }, [dispatch]
   )
-
-  const files = useSelector(state => selectFiles(state))
 
   const showDeleteConfirm = (file) => {
     confirm({
@@ -155,6 +133,10 @@ function FilesList() {
       />
     </div>
   )
+}
+
+FilesList.propTypes = {
+  files: PropTypes.array.isRequired,
 }
 
 export default FilesList
