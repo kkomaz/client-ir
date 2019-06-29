@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router-dom'
-import { FilesList } from 'components/files'
+import { Default, Mobile } from 'components/Responsive'
+import { FilesList, FilesListMobile } from 'components/files'
 
 const FilesRoute = (props) => {
   const { match, files } = props
@@ -11,7 +12,18 @@ const FilesRoute = (props) => {
       <Route
         exact
         path={`${match.url}`}
-        render={() => <FilesList files={files} />}
+        render={() => {
+          return (
+            <React.Fragment>
+              <Default>
+                <FilesList files={files} />
+              </Default>
+              <Mobile>
+                <FilesListMobile files={files} />
+              </Mobile>
+            </React.Fragment>
+          )
+        }}
       />
     </Switch>
   )
