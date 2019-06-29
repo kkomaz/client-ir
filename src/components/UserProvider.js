@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import EzUser from 'models/ezUser'
+
 export const UserContext = React.createContext();
 
 class UserProvider extends Component {

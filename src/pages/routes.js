@@ -94,7 +94,7 @@ function RootRoute(props) {
                   path="/"
                   render={() => (
                     <Home
-                      files={files}
+                      currentFiles={files}
                     />
                   )}
                 />
@@ -133,7 +133,7 @@ function RootRoute(props) {
             }
           `}
         >
-          TechRally ©2019 Created by TechRally
+          Tech Rally ©2019 Created by Tech Rally
         </Layout.Footer>
       </Layout>
     </UserProvider>

@@ -1,5 +1,6 @@
 /** @jsx jsx */
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useContext } from 'react'
+import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { createFile } from 'actions/file'
 import { jsx, css } from '@emotion/core'
@@ -14,22 +15,28 @@ import {
   Row,
   Typography,
   Upload,
+  Modal,
 } from 'antd'
 import { saveAs } from 'file-saver'
 import placeholder from 'assets/placeholder.png'
 import { dataUrlToFile } from 'utils/file'
+import { UserContext } from 'components/UserProvider'
 
 const { Dragger } = Upload;
 const { Title } = Typography
 
-function Home() {
+function Home(props) {
+  const { currentFiles } = props
   const [files, setFiles] = useState([])
   const [width, setWidth] = useState(0)
   const [height, setHeight] = useState(0)
   const [newWidth, setNewWidth] = useState(0)
   const [newHeight, setNewHeight] = useState(0)
   const [currentFile, setCurrentFile] = useState('')
+  const [visible, setVisible] = useState(false)
   const dispatch = useDispatch()
+  const userContext = useContext(UserContext)
+  const { ezUser } = userContext.state.sessionUser
 
   const createFileLoading = useSelector(state => state.file.createFileLoading)
 
@@ -63,6 +70,15 @@ function Home() {
       )
     }, [dispatch, files, currentFile, height, width, newHeight, newWidth]
   )
+
+  const checkStatus = () => {
+    if (currentFiles.length === 5 && !ezUser.attrs.premium) {
+      setVisible(true)
+      return null
+    }
+
+    return saveToGaia()
+  }
 
   const setNewDimension = (uri) => {
     const file = dataUrlToFile(uri, 'sample.txt')
@@ -129,6 +145,16 @@ function Home() {
     saveAs(currentFile, files[0].name)
   }
 
+  const handleClose = () => {
+    setVisible(false)
+  }
+
+  const openSurvey = () => {
+    const win = window.open('https://forms.gle/f6c4PJr9k7QSZQ6G9', '_blank'); /* eslint-disable-line */
+    win.focus();
+  }
+
+
   return (
     <div>
       <Card>
@@ -155,9 +181,12 @@ function Home() {
               <p className="ant-upload-drag-icon">
                 <Icon type="inbox" />
               </p>
-              <p className="ant-upload-text">Click or drag file to this area to upload</p>
+              <p className="ant-upload-text">Click or drag file to this area to resize your image (jpg, png, webp)</p>
               <p className="ant-upload-hint">
-                Support for a single upload. Image will be converted to jpeg, png, or webp
+                Support for a single upload.
+              </p>
+              <p className="ant-upload-hint">
+                Image size might not match the max width/height to preserve image ratio quality.
               </p>
             </Dragger>
           </Col>
@@ -278,7 +307,7 @@ function Home() {
               <Title level={4}>Actions</Title>
               <Button
                 loading={createFileLoading}
-                onClick={saveToGaia}
+                onClick={checkStatus}
                 type="primary"
                 css={css`
                   width: 100%;
@@ -315,8 +344,46 @@ function Home() {
           </Col>
         </Row>
       </Card>
+      <Modal
+        title="Oh No!  Looks like you're at max capacity!"
+        visible={visible}
+        footer={[
+          <Button
+            onClick={handleClose}
+          >
+            Close
+          </Button>,
+        ]}
+      >
+        <p>
+          Thank you for using EZResize.  Currently, file saving is limited to 5 files.  If you would like to create a new file, please delete an older file by clicking on the <strong>My Files Tab</strong>.
+        </p>
+
+        <p>
+          Would you consider a premium option with unlimited file storage?
+        </p>
+
+        <p>Take a quick survey and let us know!</p>
+
+        <div
+          css={css`
+            text-align: center;
+          `}
+        >
+          <Button
+            type="primary"
+            onClick={openSurvey}
+          >
+            Survey
+          </Button>
+        </div>
+      </Modal>
     </div>
   )
+}
+
+Home.propTypes = {
+  currentFiles: PropTypes.array.isRequired,
 }
 
 export default Home

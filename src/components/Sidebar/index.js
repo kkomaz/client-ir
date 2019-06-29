@@ -54,8 +54,8 @@ function IrSidebar() {
         </Menu.Item>
         {/*
           <Menu.Item key="premium">
-          <Icon type="unlock" />
-          <span>EZResize Premium</span>
+            <Icon type="unlock" />
+            <span>EZResize Premium</span>
           </Menu.Item>
         */}
         <Menu.Item key="donate">
