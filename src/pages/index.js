@@ -66,10 +66,10 @@ function Home() {
 
   const setNewDimension = (uri) => {
     const file = dataUrlToFile(uri, 'sample.txt')
-    const fr = new FileReader
+    const fr = new FileReader // eslint-disable-line
 
     fr.onload = () => {
-      const img = new Image
+      const img = new Image // eslint-disable-line
 
       img.onload = () => {
         setNewWidth(img.width)
