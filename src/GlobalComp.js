@@ -100,6 +100,10 @@ class GlobalComp extends Component {
             body {
               background: #fafbfc;
             }
+
+            .small {
+              font-size: 11px;
+            }
           `}
         />
         <div>

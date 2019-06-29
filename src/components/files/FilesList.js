@@ -71,7 +71,7 @@ function FilesList() {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: text => <p>{text}</p>
+      render: text => <p className="small">{text}</p>
     },
     {
       align: 'center',
@@ -98,7 +98,7 @@ function FilesList() {
       key: 'width',
       render: width => {
         const text = width ? `${width}px` : '-'
-        return <p>{text}</p>;
+        return <p className="small">{text}</p>;
       },
     },
     {
@@ -108,7 +108,7 @@ function FilesList() {
       key: 'height',
       render: height => {
         const text = height ? `${height}px` : '-'
-        return <p>{text}</p>;
+        return <p className="small">{text}</p>;
       },
     },
     {
