@@ -11,6 +11,7 @@ import {
   Modal,
 } from 'antd'
 import { saveAs } from 'file-saver'
+import placeholder from 'assets/placeholder.png'
 
 const { confirm } = Modal
 
@@ -57,16 +58,24 @@ function FilesList(props) {
       dataIndex: 'image',
       key: 'image',
       render: file => (
-        <img
-          src={file.attrs.blob}
+        <div
+          className={`file-${file._id}`}
           alt="resize"
           css={css`
-            background: url("${file.attrs.blob_lq}"));
-            background-repeat: no-repeat, no-repeat;
+            background-image: url("${file.attrs.blob_lq}");
             width: 100px;
             height: 100px;
           `}
-        />
+        >
+          <img
+            css={css`
+              width: 100px;
+              height: 100px;
+            `}
+            src={file.attrs.blob}
+            alt="uploaded"
+          />
+        </div>
       )
     },
     {
