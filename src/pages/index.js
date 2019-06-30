@@ -19,8 +19,9 @@ import {
 } from 'antd'
 import { saveAs } from 'file-saver'
 import placeholder from 'assets/placeholder.png'
-import { dataUrlToFile } from 'utils/file'
+import { dataUrlToFile, getBlobUrl } from 'utils/file'
 import { UserContext } from 'components/UserProvider'
+import generateUUID from 'utils/generateUUID'
 
 const { Dragger } = Upload;
 const { Title } = Typography
@@ -37,12 +38,17 @@ function Home(props) {
   const dispatch = useDispatch()
   const userContext = useContext(UserContext)
   const { ezUser } = userContext.state.sessionUser
-
+  const { userSession } = userContext.state.sessionUser
   const createFileLoading = useSelector(state => state.file.createFileLoading)
 
   const saveToGaia = useCallback(
-    () => {
+    async () => {
       let blowLq
+
+      const blobId = generateUUID()
+      const options = { encrypt: true }
+
+      await userSession.putFile(getBlobUrl(blobId), JSON.stringify(currentFile), options)
 
       Resizer.imageFileResizer(
         files[0],
@@ -56,6 +62,7 @@ function Home(props) {
           const params = {
             name: files[0].name,
             blob: currentFile,
+            blob_id: blobId,
             blob_lq: blowLq,
             max_height: height,
             max_width: width,
@@ -64,11 +71,11 @@ function Home(props) {
           }
 
           return dispatch(
-            createFile(params)
+            createFile(params, currentFile)
           )
         }
       )
-    }, [dispatch, files, currentFile, height, width, newHeight, newWidth]
+    }, [dispatch, files, currentFile, height, width, newHeight, newWidth, userSession]
   )
 
   const checkStatus = () => {

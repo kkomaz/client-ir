@@ -13,6 +13,9 @@ export default class File extends Model {
     blob_lq: {
       type: String,
     },
+    blob_id: {
+      type: String,
+    },
     max_height: {
       type: Number,
     },
