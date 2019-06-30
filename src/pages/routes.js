@@ -47,8 +47,8 @@ function RootRoute(props) {
 
   const startFetchLists = useCallback(
     () => dispatch(
-      fetchFiles()
-    ), [dispatch]
+      fetchFiles(userSession)
+    ), [dispatch, userSession]
   )
 
   useEffect(() => {

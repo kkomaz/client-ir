@@ -1,4 +1,5 @@
 import {
+  APPEND_FILE_BLOB_SUCCESS,
   REQUEST_CREATE_FILE,
   CREATE_FILE_FAIL,
   CREATE_FILE_SUCCESS,
@@ -9,6 +10,7 @@ import { removeObjFromList } from 'reducers/utils'
 import openNotificationWithIcon from 'utils/notification/openNotificationWithIcon'
 
 const defaultState = {
+  blobs: {},
   list: [],
   createFileLoading: false,
 }
@@ -35,6 +37,10 @@ export default function viewReducer(state = defaultState, action) {
     }
     case FETCH_FILES_SUCCESS: {
       return { ...state, list: action.payload.files }
+    }
+    case APPEND_FILE_BLOB_SUCCESS: {
+      const { blobs } = action.payload
+      return { ...state, blobs } // Need to fix this later
     }
     default:
       return state

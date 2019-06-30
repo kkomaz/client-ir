@@ -2,8 +2,8 @@
 import { jsx, css } from '@emotion/core'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { useCallback, useContext } from 'react'
-import { useDispatch } from 'react-redux'
+import { useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { deleteFile } from 'actions/file'
 import {
   Button,
@@ -11,16 +11,13 @@ import {
   Modal,
 } from 'antd'
 import { saveAs } from 'file-saver'
-import { UserContext } from 'components/UserProvider'
-import { getBlobUrl } from 'utils/file'
 
 const { confirm } = Modal
 
 function FilesList(props) {
   const { files } = props
   const dispatch = useDispatch()
-  const userContext = useContext(UserContext)
-  const { userSession } = userContext.state.sessionUser
+  const blobs = useSelector(state => state.file.blobs)
 
   const saveLocally = (file) => {
     saveAs(file.attrs.blob, file.attrs.name)
@@ -45,13 +42,6 @@ function FilesList(props) {
         requestDeleteFile(file)
       }
     })
-  }
-
-  const fetchIt = async () => {
-    const result = await userSession.getFile(getBlobUrl(files[0].attrs.blob_id), { decrypt: true })
-    console.log(result)
-    // const file = JSON.parse(result)
-    // console.log(file)
   }
 
   const columns = [
@@ -82,7 +72,7 @@ function FilesList(props) {
               width: 100px;
               height: 100px;
             `}
-            src={file.attrs.blob}
+            src={blobs[file.attrs.blob_id]}
             alt=""
           />
         </div>
@@ -150,13 +140,8 @@ function FilesList(props) {
     actions: file,
   }))
 
-  console.log(files)
-
   return (
     <div>
-      <Button onClick={fetchIt}>
-        Fetch Image
-      </Button>
       <Table
         columns={columns}
         dataSource={data}

@@ -48,7 +48,10 @@ function Home(props) {
       const blobId = generateUUID()
       const options = { encrypt: true }
 
-      await userSession.putFile(getBlobUrl(blobId), JSON.stringify(currentFile), options)
+      await userSession.putFile(getBlobUrl(blobId), JSON.stringify({
+        _id: blobId,
+        blob: currentFile
+      }), options)
 
       Resizer.imageFileResizer(
         files[0],
