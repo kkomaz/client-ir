@@ -150,7 +150,7 @@ function Home(props) {
   }
 
   const openSurvey = () => {
-    const win = window.open('https://forms.gle/f6c4PJr9k7QSZQ6G9', '_blank'); /* eslint-disable-line */
+    const win = window.open('https://forms.gle/4zG3Gqt4Cn1eVeNJ8', '_blank'); /* eslint-disable-line */
     win.focus();
   }
 

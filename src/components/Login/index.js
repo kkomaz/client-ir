@@ -106,7 +106,7 @@ class Login extends Component {
                       </div>
                       <div>
                         <a
-                          href="https://landing.debutapp.social"
+                          href="https://ezresize.tech"
                           rel="noopener noreferrer"
                           target="_blank"
                           css={css`
