@@ -10,7 +10,10 @@ export default class File extends Model {
     blob: {
       type: String,
     },
-    blow_lq: {
+    blob_lq: {
+      type: String,
+    },
+    blob_id: {
       type: String,
     },
     max_height: {
