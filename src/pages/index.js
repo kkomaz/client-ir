@@ -64,7 +64,6 @@ function Home(props) {
           blowLq = uri
           const params = {
             name: files[0].name,
-            blob: currentFile,
             blob_id: blobId,
             blob_lq: blowLq,
             max_height: height,
