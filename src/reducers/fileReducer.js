@@ -1,4 +1,5 @@
 import {
+  ADD_BLOB_SUCCESS,
   APPEND_FILE_BLOB_SUCCESS,
   REQUEST_CREATE_FILE,
   CREATE_FILE_FAIL,
@@ -37,6 +38,10 @@ export default function viewReducer(state = defaultState, action) {
     }
     case FETCH_FILES_SUCCESS: {
       return { ...state, list: action.payload.files }
+    }
+    case ADD_BLOB_SUCCESS: {
+      const { blob, blobId } = action.payload
+      return { ...state, blobs: { ...state.blobs, [blobId]: blob } }
     }
     case APPEND_FILE_BLOB_SUCCESS: {
       const { blobs } = action.payload

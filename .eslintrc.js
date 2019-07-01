@@ -3,6 +3,7 @@ module.exports = {
   "parser": "babel-eslint",
   "plugins": ["react-hooks"],
   "rules": {
+    "camelcase": 0,
     "comma-dangle": 0,
     "semi": 0,
     "operator-linebreak": 0,
