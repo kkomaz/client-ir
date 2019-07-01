@@ -1,5 +1,6 @@
 import {
-  REQUEST_CREATE_FILE,
+  ADD_BLOB_SUCCESS,
+  APPEND_FILE_BLOB_SUCCESS,
   CREATE_FILE_FAIL,
   CREATE_FILE_SUCCESS,
   DELETE_FILE_SUCCESS,
@@ -9,15 +10,12 @@ import { removeObjFromList } from 'reducers/utils'
 import openNotificationWithIcon from 'utils/notification/openNotificationWithIcon'
 
 const defaultState = {
+  blobs: {},
   list: [],
-  createFileLoading: false,
 }
 
 export default function viewReducer(state = defaultState, action) {
   switch (action.type) {
-    case REQUEST_CREATE_FILE: {
-      return { ...state, createFileLoading: true }
-    }
     case CREATE_FILE_FAIL: {
       return state
     }
@@ -26,7 +24,6 @@ export default function viewReducer(state = defaultState, action) {
       return {
         ...state,
         list: [...state.list, action.payload.file],
-        createFileLoading: false,
       }
     }
     case DELETE_FILE_SUCCESS: {
@@ -35,6 +32,14 @@ export default function viewReducer(state = defaultState, action) {
     }
     case FETCH_FILES_SUCCESS: {
       return { ...state, list: action.payload.files }
+    }
+    case ADD_BLOB_SUCCESS: {
+      const { blob, blobId } = action.payload
+      return { ...state, blobs: { ...state.blobs, [blobId]: blob } }
+    }
+    case APPEND_FILE_BLOB_SUCCESS: {
+      const { blobs } = action.payload
+      return { ...state, blobs } // Need to fix this later
     }
     default:
       return state

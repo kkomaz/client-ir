@@ -2,8 +2,8 @@
 import { jsx, css } from '@emotion/core'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { useCallback } from 'react'
-import { useDispatch } from 'react-redux'
+import { useCallback, useContext } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { deleteFile } from 'actions/file'
 import {
   Button,
@@ -11,24 +11,27 @@ import {
   Modal,
 } from 'antd'
 import { saveAs } from 'file-saver'
-import placeholder from 'assets/placeholder.png'
+import { UserContext } from 'components/UserProvider'
 
 const { confirm } = Modal
 
 function FilesList(props) {
   const { files } = props
   const dispatch = useDispatch()
+  const blobs = useSelector(state => state.file.blobs)
+  const userContext = useContext(UserContext)
+  const { userSession } = userContext.state.sessionUser
 
   const saveLocally = (file) => {
-    saveAs(file.attrs.blob, file.attrs.name)
+    saveAs(blobs[file.attrs.blob_id], file.attrs.name)
   }
 
   const requestDeleteFile = useCallback(
     file => {
       return dispatch(
-        deleteFile(file)
+        deleteFile(file, userSession)
       )
-    }, [dispatch]
+    }, [dispatch, userSession]
   )
 
   const showDeleteConfirm = (file) => {
@@ -72,8 +75,8 @@ function FilesList(props) {
               width: 100px;
               height: 100px;
             `}
-            src={file.attrs.blob}
-            alt="uploaded"
+            src={blobs[file.attrs.blob_id]}
+            alt=""
           />
         </div>
       )
