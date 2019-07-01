@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { useState, useCallback, useContext } from 'react'
 import PropTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { createFile } from 'actions/file'
 import { jsx, css } from '@emotion/core'
 import _ from 'lodash'
@@ -35,11 +35,11 @@ function Home(props) {
   const [newHeight, setNewHeight] = useState(0)
   const [currentFile, setCurrentFile] = useState('')
   const [visible, setVisible] = useState(false)
+  const [createFileLoading, setCreateFileLoading] = useState(false)
   const dispatch = useDispatch()
   const userContext = useContext(UserContext)
   const { ezUser } = userContext.state.sessionUser
   const { userSession } = userContext.state.sessionUser
-  const createFileLoading = useSelector(state => state.file.createFileLoading)
 
   const saveToGaia = useCallback(
     async () => {
@@ -75,7 +75,9 @@ function Home(props) {
 
           return dispatch(
             createFile(params, currentFile)
-          )
+          ).then(() => {
+            setCreateFileLoading(false)
+          })
         }
       )
     }, [dispatch, files, currentFile, height, width, newHeight, newWidth, userSession]
@@ -86,6 +88,8 @@ function Home(props) {
       setVisible(true)
       return null
     }
+
+    setCreateFileLoading(true)
 
     return saveToGaia()
   }

@@ -1,7 +1,6 @@
 import {
   ADD_BLOB_SUCCESS,
   APPEND_FILE_BLOB_SUCCESS,
-  REQUEST_CREATE_FILE,
   CREATE_FILE_FAIL,
   CREATE_FILE_SUCCESS,
   DELETE_FILE_SUCCESS,
@@ -13,14 +12,10 @@ import openNotificationWithIcon from 'utils/notification/openNotificationWithIco
 const defaultState = {
   blobs: {},
   list: [],
-  createFileLoading: false,
 }
 
 export default function viewReducer(state = defaultState, action) {
   switch (action.type) {
-    case REQUEST_CREATE_FILE: {
-      return { ...state, createFileLoading: true }
-    }
     case CREATE_FILE_FAIL: {
       return state
     }
@@ -29,7 +24,6 @@ export default function viewReducer(state = defaultState, action) {
       return {
         ...state,
         list: [...state.list, action.payload.file],
-        createFileLoading: false,
       }
     }
     case DELETE_FILE_SUCCESS: {
