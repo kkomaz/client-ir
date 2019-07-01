@@ -73,7 +73,7 @@ function Home(props) {
           }
 
           return dispatch(
-            createFile(params, currentFile)
+            createFile(params, currentFile, blobId)
           ).then(() => {
             setCreateFileLoading(false)
           })
