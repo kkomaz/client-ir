@@ -23,7 +23,7 @@ function FilesListMobile(props) {
   const { userSession } = userContext.state.sessionUser
 
   const saveLocally = (file) => {
-    saveAs(file.attrs.blob, file.attrs.name)
+    saveAs(blobs[file.attrs.blob_id], file.attrs.name)
   }
 
   const requestDeleteFile = useCallback(
@@ -87,7 +87,12 @@ function FilesListMobile(props) {
       dataIndex: 'actions',
       key: 'actions',
       render: file => (
-        <div>
+        <div
+          css={css`
+            display: flex;
+            flex-direction: column;
+          `}
+        >
           <Button
             onClick={() => showDeleteConfirm(file)}
             css={css`
