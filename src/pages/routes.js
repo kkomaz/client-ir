@@ -19,9 +19,10 @@ import {
   Layout,
 } from 'antd';
 import Navbar from 'components/Navbar'
-import IrSidebar from 'components/Sidebar'
+import { IrSidebar, IrSidebarMobile } from 'components/Sidebar'
 import FilesRoutes from 'pages/files/routes'
 import { createSelector } from 'reselect'
+import { Default, Mobile } from 'components/Responsive'
 import Home from '.'
 import Donate from './donate'
 import Premium from './premium'
@@ -80,8 +81,13 @@ function RootRoute(props) {
               height: 100vh;
             `}
           >
-            <IrSidebar />
 
+            <Default>
+              <IrSidebar />
+            </Default>
+            <Mobile>
+              <IrSidebarMobile />
+            </Mobile>
             <Layout
               css={css`
                 background: #fff;
