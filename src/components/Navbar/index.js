@@ -77,6 +77,25 @@ function Navbar(props) {
           >
             Sign Out
           </Menu.Item>
+          <div
+            css={css`
+              position: absolute;
+              left: 60%;
+              transform: translateX(-60%);
+            `}
+          >
+            <a
+              href="https://www.producthunt.com/posts/ezresize?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-ezresize" target="_blank">
+              <img
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=163244&theme=light"
+                alt="EZResize - A privacy focused re-size tool | Product Hunt Embed"
+                style={{
+                  width: '250px',
+                  height: '54px',
+                }}
+              />
+            </a>
+          </div>
         </Menu>
       </Container>
     </Header>
