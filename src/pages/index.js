@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { useState, useCallback, useContext } from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { createFile } from 'actions/file'
@@ -139,7 +139,6 @@ function Home(props) {
   }
 
   const replaceFile = (file) => {
-    console.log(file);
     if (currentFile) {
       removeImage()
     }
@@ -167,7 +166,6 @@ function Home(props) {
     const win = window.open('https://forms.gle/4zG3Gqt4Cn1eVeNJ8', '_blank'); /* eslint-disable-line */
     win.focus();
   }
-
 
   return (
     <div>
@@ -200,7 +198,7 @@ function Home(props) {
                 Support for a single upload.
               </p>
               <p className="ant-upload-hint">
-                Image size might not match the max width/height to preserve image ratio quality.
+                Image size might not match the <span style={{ color: '#1DA57A', fontWeight: 'bold' }}>max width/height</span> to preserve image ratio quality.
               </p>
             </Dragger>
           </Col>
@@ -217,9 +215,39 @@ function Home(props) {
                 display: flex;
                 justify-content: flex-end;
                 align-items: center;
+                position: relative;
               `}
             >
-              <span>
+              {
+                (files.length > 0 && !currentFile) &&
+                <div
+                  css={css`
+                    display: flex;
+                    align-items: center;
+                  `}
+                >
+                  <p
+                    css={theme => css`
+                      margin-bottom: 0;
+                      margin-right: 5px;
+                      color: ${theme.colors.linkColor};
+                    `}
+                  >
+                    Select max width and height
+                  </p>
+                  <Icon
+                    type="arrow-right"
+                    style={{
+                      color: '#1d48a5'
+                    }}
+                  />
+                </div>
+              }
+              <span
+                css={css`
+                  margin-left: 10px;
+                `}
+              >
                 max-width:
               </span>
               <InputNumber
@@ -278,22 +306,27 @@ function Home(props) {
                 flex-direction: column;
               `}
             >
-              <Title level={4}>Image Preview</Title>
-              <div
-                css={css`
-                  max-height: 400px;
-                  overflow: auto;
-                `}
-              >
-                <img
-                  css={theme => css`
-                    border: 1px dashed ${theme.colors.primary};
-                    width: 100%;
-                  `}
-                  src={_.isEmpty(currentFile) ? placeholder : currentFile}
-                  alt="preview"
-                />
-              </div>
+              {
+                !_.isEmpty(currentFile) &&
+                <React.Fragment>
+                  <Title level={4}>Image Preview</Title>
+                  <div
+                    css={css`
+                      max-height: 400px;
+                      overflow: auto;
+                    `}
+                  >
+                    <img
+                      css={theme => css`
+                        border: 1px dashed ${theme.colors.primary};
+                        width: 100%;
+                      `}
+                      src={_.isEmpty(currentFile) ? placeholder : currentFile}
+                      alt="preview"
+                    />
+                  </div>
+                </React.Fragment>
+              }
               {
                 !_.isEmpty(currentFile) &&
                 <p
