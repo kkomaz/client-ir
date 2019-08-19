@@ -139,6 +139,7 @@ function Home(props) {
   }
 
   const replaceFile = (file) => {
+    console.log(file);
     if (currentFile) {
       removeImage()
     }
@@ -187,7 +188,7 @@ function Home(props) {
               multiple={false}
               beforeUpload={replaceFile}
               fileList={files}
-              accept=".jpeg, .png, .webp"
+              accept=".jpeg, .png, .webp, .jpg"
               disabled={createFileLoading}
               onRemove={removeImage}
             >
