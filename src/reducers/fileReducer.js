@@ -23,7 +23,7 @@ export default function viewReducer(state = defaultState, action) {
       openNotificationWithIcon('success', 'File Saved', 'File Successfully Saved')
       return {
         ...state,
-        list: [...state.list, action.payload.file],
+        list: [action.payload.file, ...state.list],
       }
     }
     case DELETE_FILE_SUCCESS: {
@@ -34,8 +34,8 @@ export default function viewReducer(state = defaultState, action) {
       return { ...state, list: action.payload.files }
     }
     case ADD_BLOB_SUCCESS: {
-      const { blob, blobId } = action.payload
-      return { ...state, blobs: { ...state.blobs, [blobId]: blob } }
+      const { blobId, fullParams } = action.payload
+      return { ...state, blobs: { ...state.blobs, [blobId]: fullParams } }
     }
     case APPEND_FILE_BLOB_SUCCESS: {
       const { blobs } = action.payload

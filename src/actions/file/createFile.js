@@ -6,7 +6,7 @@ import {
   CREATE_FILE_FAIL,
 } from '..'
 
-const createFile = (params, currentFile, blobId) => (
+const createFile = (params, fullParams, currentFile, blobId) => (
   async (dispatch) => {
     dispatch({ type: REQUEST_CREATE_FILE })
 
@@ -17,6 +17,7 @@ const createFile = (params, currentFile, blobId) => (
       dispatch({
         type: ADD_BLOB_SUCCESS,
         payload: {
+          fullParams,
           blob: currentFile,
           blobId,
         }

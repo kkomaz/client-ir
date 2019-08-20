@@ -12,6 +12,7 @@ import {
 } from 'antd'
 import { saveAs } from 'file-saver'
 import { UserContext } from 'components/UserProvider'
+import { List } from 'react-content-loader'
 
 const { confirm } = Modal
 
@@ -21,6 +22,8 @@ function FilesList(props) {
   const blobs = useSelector(state => state.file.blobs)
   const userContext = useContext(UserContext)
   const { userSession } = userContext.state.sessionUser
+
+  console.log(blobs);
 
   const saveLocally = (file) => {
     saveAs(blobs[file.attrs.blob_id], file.attrs.name)
@@ -53,41 +56,64 @@ function FilesList(props) {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: text => <p className="small">{text}</p>
+      render: (file) => {
+        const name = _.get(blobs[file.attrs.blob_id], 'name', '-')
+        const src = _.get(blobs[file.attrs.blob_id], 'blob', '')
+
+        if (_.isEmpty(src)) {
+          return <List />
+        }
+
+        return (
+          <p className="small">
+            {name}
+          </p>
+        )
+      }
     },
     {
       align: 'center',
       title: 'Image',
       dataIndex: 'image',
       key: 'image',
-      render: file => (
-        <div
-          className={`file-${file._id}`}
-          alt="resize"
-          css={css`
-            background-image: url("${file.attrs.blob_lq}");
-            width: 100px;
-            height: 100px;
-          `}
-        >
-          <img
-            css={css`
-              width: 100px;
-              height: 100px;
-            `}
-            src={blobs[file.attrs.blob_id]}
-            alt=""
-          />
-        </div>
-      )
+      render: file => {
+        const src = _.get(blobs[file.attrs.blob_id], 'blob', '')
+
+        if (_.isEmpty(src)) {
+          return <List />
+        }
+
+        return (
+          <div
+            className={`file-${file._id}`}
+            alt="resize"
+          >
+            <img
+              css={css`
+                width: 100px;
+                height: 100px;
+              `}
+              src={_.get(blobs[file.attrs.blob_id], 'blob', '')}
+              alt=""
+            />
+          </div>
+        )
+      }
     },
     {
       align: 'center',
       title: 'Width',
       dataIndex: 'width',
       key: 'width',
-      render: width => {
-        const text = width ? `${width}px` : '-'
+      render: file => {
+        const newWidth = _.get(blobs[file.attrs.blob_id], 'new_width', '')
+        const src = _.get(blobs[file.attrs.blob_id], 'blob', '')
+
+        if (_.isEmpty(src)) {
+          return <List />
+        }
+
+        const text = newWidth ? `${newWidth}px` : '-'
         return <p className="small">{text}</p>;
       },
     },
@@ -96,8 +122,14 @@ function FilesList(props) {
       title: 'Height',
       dataIndex: 'height',
       key: 'height',
-      render: height => {
-        const text = height ? `${height}px` : '-'
+      render: file => {
+        const newHeight = _.get(blobs[file.attrs.blob_id], 'new_height', '')
+        const src = _.get(blobs[file.attrs.blob_id], 'blob', '')
+
+        if (_.isEmpty(src)) {
+          return <List />
+        }
+        const text = newHeight ? `${newHeight}px` : '-'
         return <p className="small">{text}</p>;
       },
     },
@@ -136,10 +168,10 @@ function FilesList(props) {
 
   const data = _.map(files, file => ({
     key: file.attrs._id,
-    name: file.attrs.name,
+    name: file,
     image: file,
-    height: file.attrs.new_height,
-    width: file.attrs.new_width,
+    height: file,
+    width: file,
     actions: file,
   }))
 

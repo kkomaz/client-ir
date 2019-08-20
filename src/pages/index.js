@@ -43,15 +43,18 @@ function Home(props) {
 
   const saveToGaia = useCallback(
     async () => {
-      let blowLq
-
       const blobId = generateUUID()
       const options = { encrypt: true }
 
-      await userSession.putFile(getBlobUrl(blobId), JSON.stringify({
+      const fullParams = {
         _id: blobId,
-        blob: currentFile
-      }), options)
+        name: files[0].name,
+        blob: currentFile,
+        new_height: newHeight,
+        new_width: newWidth,
+      }
+
+      await userSession.putFile(getBlobUrl(blobId), JSON.stringify(fullParams), options)
 
       Resizer.imageFileResizer(
         files[0],
@@ -60,26 +63,19 @@ function Home(props) {
         'JPEG',
         30,
         0,
-        (uri) => {
-          blowLq = uri
+        () => {
           const params = {
-            name: files[0].name,
             blob_id: blobId,
-            blob_lq: blowLq,
-            max_height: height,
-            max_width: width,
-            new_height: newHeight,
-            new_width: newWidth,
           }
 
           return dispatch(
-            createFile(params, currentFile, blobId)
+            createFile(params, fullParams, currentFile, blobId)
           ).then(() => {
             setCreateFileLoading(false)
           })
         }
       )
-    }, [dispatch, files, currentFile, height, width, newHeight, newWidth, userSession]
+    }, [dispatch, files, currentFile, newHeight, newWidth, userSession]
   )
 
   const checkStatus = () => {

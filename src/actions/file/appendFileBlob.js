@@ -20,7 +20,7 @@ const appendFileBlob = async (result, userSession, dispatch) => {
 
     _.each(fetchedBlobs, (b) => {
       const parsedBlob = JSON.parse(b)
-      parsedBlobs[parsedBlob._id] = parsedBlob.blob
+      parsedBlobs[parsedBlob._id] = parsedBlob
     })
 
     dispatch({

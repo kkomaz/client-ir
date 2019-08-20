@@ -19,6 +19,7 @@
     "prop-types": "latest",
     "radiks": "^0.2.1",
     "react": "latest",
+    "react-content-loader": "^4.2.2",
     "react-dom": "latest",
     "react-iframe-resizer-super": "^0.2.2",
     "react-image-file-resizer": "^0.2.0",
