@@ -23,10 +23,10 @@ function FilesList(props) {
   const userContext = useContext(UserContext)
   const { userSession } = userContext.state.sessionUser
 
-  console.log(blobs);
-
   const saveLocally = (file) => {
-    saveAs(blobs[file.attrs.blob_id], file.attrs.name)
+    const { blob_id } = file.attrs
+    const currentFile = blobs[blob_id]
+    saveAs(currentFile.blob, _.get(currentFile, 'name', '-'))
   }
 
   const requestDeleteFile = useCallback(
