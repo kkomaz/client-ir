@@ -193,8 +193,16 @@ function Home(props) {
               <p className="ant-upload-hint">
                 Support for a single upload.
               </p>
-              <p className="ant-upload-hint">
-                Image size might not match the <span style={{ color: '#1DA57A', fontWeight: 'bold' }}>max width/height</span> to preserve image ratio quality.
+              <p
+                className="ant-upload-hint"
+              >
+                <span
+                  css={theme => css`
+                    color: ${theme.colors.danger};
+                  `}
+                >
+                  Image resize might not match the max width/height to preserve image ratio quality.
+                </span>
               </p>
             </Dragger>
           </Col>
