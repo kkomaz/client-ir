@@ -12,6 +12,7 @@ import {
 } from 'antd'
 import { saveAs } from 'file-saver'
 import { UserContext } from 'components/UserProvider'
+import { List } from 'react-content-loader'
 
 const { confirm } = Modal
 
@@ -53,33 +54,49 @@ function FilesListMobile(props) {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: text => <p className="small">{text}</p>
+      render: (file) => {
+        const name = _.get(blobs[file.attrs.blob_id], 'name', '-')
+        const src = _.get(blobs[file.attrs.blob_id], 'blob', '')
+
+        if (_.isEmpty(src)) {
+          return <List />
+        }
+
+        return (
+          <p className="small">
+            {name}
+          </p>
+        )
+      }
     },
     {
       align: 'center',
       title: 'Image',
       dataIndex: 'image',
       key: 'image',
-      render: file => (
-        <div
-          className={`file-${file._id}`}
-          alt="resize"
-          css={css`
-            background-image: url("${file.attrs.blob_lq}");
-            width: 50px;
-            height: 50px;
-          `}
-        >
-          <img
-            css={css`
-              width: 50px;
-              height: 50px;
-            `}
-            src={blobs[file.attrs.blob_id]}
-            alt=""
-          />
-        </div>
-      )
+      render: file => {
+        const src = _.get(blobs[file.attrs.blob_id], 'blob', '')
+
+        if (_.isEmpty(src)) {
+          return <List />
+        }
+
+        return (
+          <div
+            className={`file-${file._id}`}
+            alt="resize"
+          >
+            <img
+              css={css`
+                width: 100px;
+                height: 100px;
+              `}
+              src={_.get(blobs[file.attrs.blob_id], 'blob', '')}
+              alt=""
+            />
+          </div>
+        )
+      }
     },
     {
       title: 'Actions',
@@ -119,7 +136,7 @@ function FilesListMobile(props) {
 
   const data = _.map(files, file => ({
     key: file.attrs._id,
-    name: file.attrs.name,
+    name: file,
     image: file,
     actions: file,
   }))
